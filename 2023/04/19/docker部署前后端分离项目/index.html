@@ -1,0 +1,685 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/bg/s.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="🌭Docker部署  一，首先先拉取nginx  1docker pull nginx   (ps:注意一点问题，如何pull失败的话可能是由于网络问题，因为docker数据源默认是国外的) 先在etc文件夹里面创建docker文件夹，同时在docker文件夹里面创建daemo.json 1vim &#x2F;etc&#x2F;docker&#x2F;daemo.json  如何提示没有docker文件夹，则创建一个 在da">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker部署前后端分离项目">
+<meta property="og:url" content="http://example.com/2023/04/19/docker%E9%83%A8%E7%BD%B2%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="阿塔利亚-">
+<meta property="og:description" content="🌭Docker部署  一，首先先拉取nginx  1docker pull nginx   (ps:注意一点问题，如何pull失败的话可能是由于网络问题，因为docker数据源默认是国外的) 先在etc文件夹里面创建docker文件夹，同时在docker文件夹里面创建daemo.json 1vim &#x2F;etc&#x2F;docker&#x2F;daemo.json  如何提示没有docker文件夹，则创建一个 在da">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/Snipaste_2023-03-23_09-16-53.png">
+<meta property="og:image" content="http://example.com/images/Snipaste_2023-03-23_09-30-32.png">
+<meta property="og:image" content="http://example.com/images/Snipaste_2023-03-23_09-36-23.png">
+<meta property="og:image" content="http://example.com/images/Snipaste_2023-03-23_09-41-01.png">
+<meta property="og:image" content="http://example.com/images/Snipaste_2023-03-23_09-46-32.png">
+<meta property="article:published_time" content="2023-04-19T04:00:36.000Z">
+<meta property="article:modified_time" content="2023-04-19T04:11:58.203Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/images/Snipaste_2023-03-23_09-16-53.png">
+  
+  
+  
+  <title>docker部署前后端分离项目 - 阿塔利亚-</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_3846514_kabxni94auf.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/shubiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/gundongtiao.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/toubudaziji.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/bynotes/texiao/source/css/daziyanse.css">
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>阿塔利亚-龙城守护者</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives">
+                <i class="iconfont icon-books"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/bg/2.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="docker部署前后端分离项目"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-04-19 12:00" pubdate>
+          April 19, 2023 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          2.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">docker部署前后端分离项目</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1>🌭Docker部署</h1>
+
+<h5>一，首先先拉取nginx</h5>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker pull nginx<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/Snipaste_2023-03-23_09-16-53.png" srcset="/img/loading.gif" lazyload></p>
+<p>(ps:注意一点问题，如何pull失败的话可能是由于网络问题，因为docker数据源默认是国外的)</p>
+<p>先在etc文件夹里面创建docker文件夹，同时在docker文件夹里面创建daemo.json</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/docker/daemo.json<br></code></pre></td></tr></table></figure>
+
+<p>如何提示没有docker文件夹，则创建一个</p>
+<p>在daemo.json编辑：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;registry-mirrors&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;http://hub-mirror.c.163.com&quot;</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>然后重启docker</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl stop docker<br>systemctl start docker<br></code></pre></td></tr></table></figure>
+
+<p>然后再来pull nginx</p>
+<h5>二，创建映射文件夹</h5>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd /opt<br>mkdir nginx<br>cd nginx<br>mkdir conf conf.d html logs<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/Snipaste_2023-03-23_09-30-32.png" srcset="/img/loading.gif" lazyload></p>
+<h5>三，编写相关配置文件</h5>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">1.#/opt/nginx/conf/nginx.conf<br>cd /opt/nginx/conf<br>vim nginx.conf<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs tex">user nginx;<br>worker<span class="hljs-built_in">_</span>processes 1;<br><br>error<span class="hljs-built_in">_</span>log /var/log/nginx/error.log warn;<br>pid    /var/run/nginx.pid;<br><br><br>events &#123;<br>  worker<span class="hljs-built_in">_</span>connections 1024;<br>&#125;<br><br><br>http &#123;<br>  include    /etc/nginx/mime.types;<br>  default<span class="hljs-built_in">_</span>type application/octet-stream;<br><br>  log<span class="hljs-built_in">_</span>format main &#x27;<span class="hljs-built_in">$</span>remote<span class="hljs-built_in">_</span>addr - <span class="hljs-built_in">$</span>remote<span class="hljs-built_in">_</span>user [<span class="hljs-built_in">$</span>time<span class="hljs-built_in">_</span>local] &quot;<span class="hljs-built_in">$</span>request&quot; &#x27;<br>           &#x27;<span class="hljs-built_in">$</span>status <span class="hljs-built_in">$</span>body<span class="hljs-built_in">_</span>bytes<span class="hljs-built_in">_</span>sent &quot;<span class="hljs-built_in">$</span>http<span class="hljs-built_in">_</span>referer&quot; &#x27;<br>           &#x27;&quot;<span class="hljs-built_in">$</span>http<span class="hljs-built_in">_</span>user<span class="hljs-built_in">_</span>agent&quot; &quot;<span class="hljs-built_in">$</span>http<span class="hljs-built_in">_</span>x<span class="hljs-built_in">_</span>forwarded<span class="hljs-built_in">_</span>for&quot;&#x27;;<br><br>  access<span class="hljs-built_in">_</span>log /var/log/nginx/access.log main;<br><br>  sendfile    on;<br>  <span class="hljs-params">#</span>tcp<span class="hljs-built_in">_</span>nopush   on;<br><br>  keepalive<span class="hljs-built_in">_</span>timeout 65;<br><br>  <span class="hljs-params">#</span>gzip on;<br><br>  include /etc/nginx/conf.d/*.conf;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">2.#/opt/nginx/conf.d/default.conf<br>cd /opt/nginx/conf.d<br>vim default.conf<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs tex">server &#123; <br>  listen    80; <br>  server<span class="hljs-built_in">_</span>name localhost; <br> <br>  <span class="hljs-params">#</span>charset koi8-r; <br>  <span class="hljs-params">#</span>access<span class="hljs-built_in">_</span>log /var/log/nginx/log/host.access.log main; <br> <br>  location / &#123; <br>    root   /usr/share/nginx/html/covid19-web;  <br>    index index.html index.htm; <br>    <span class="hljs-params">#</span>autoindex on;<br>    try<span class="hljs-built_in">_</span>files <span class="hljs-built_in">$</span>uri <span class="hljs-built_in">$</span>uri/ /index.html; <br>    <span class="hljs-params">#</span>try<span class="hljs-built_in">_</span>files <span class="hljs-built_in">$</span>uri /index/index/page.html; <br>    <span class="hljs-params">#</span>try<span class="hljs-built_in">_</span>files <span class="hljs-built_in">$</span>uri /index/map/page.html; <br>  &#125; <br> <br>  <span class="hljs-params">#</span>error<span class="hljs-built_in">_</span>page 404       /404.html; <br> <br>  <span class="hljs-params">#</span> redirect server error pages to the static page /50x.html <br>  <span class="hljs-params">#</span> <br>  error<span class="hljs-built_in">_</span>page  500 502 503 504 /50x.html; <br>  location = /50x.html &#123; <br>    root  /usr/share/nginx/html; <br>  &#125; <br> <br>  <span class="hljs-params">#</span> proxy the PHP scripts to Apache listening on 127.0.0.1:80 <br>  <span class="hljs-params">#</span> <br>  <span class="hljs-params">#</span>location ~ <span class="hljs-keyword">\.</span>php<span class="hljs-built_in">$</span> &#123; <br>  <span class="hljs-params">#</span>  proxy<span class="hljs-built_in">_</span>pass  http://127.0.0.1; <br>  <span class="hljs-params">#</span>&#125; <br> <br>  <span class="hljs-params">#</span> pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000 <br>  <span class="hljs-params">#</span> <br>  <span class="hljs-params">#</span>location ~ <span class="hljs-keyword">\.</span>php<span class="hljs-built_in">$</span> &#123; <br>  <span class="hljs-params">#</span>  root      html; <br>  <span class="hljs-params">#</span>  fastcgi<span class="hljs-built_in">_</span>pass  127.0.0.1:9000; <br>  <span class="hljs-params">#</span>  fastcgi<span class="hljs-built_in">_</span>index index.php; <br>  <span class="hljs-params">#</span>  fastcgi<span class="hljs-built_in">_</span>param SCRIPT<span class="hljs-built_in">_</span>FILENAME /scripts<span class="hljs-built_in">$</span>fastcgi<span class="hljs-built_in">_</span>script<span class="hljs-built_in">_</span>name; <br>  <span class="hljs-params">#</span>  include    fastcgi<span class="hljs-built_in">_</span>params; <br>  <span class="hljs-params">#</span>&#125; <br> <br>  <span class="hljs-params">#</span> deny access to .htaccess files, if Apache&#x27;s document root <br>  <span class="hljs-params">#</span> concurs with nginx&#x27;s one <br>  <span class="hljs-params">#</span> <br>  <span class="hljs-params">#</span>location ~ /<span class="hljs-keyword">\.</span>ht &#123; <br>  <span class="hljs-params">#</span>  deny all; <br>  <span class="hljs-params">#</span>&#125; <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>最后是你的项目配置文件</p>
+<p><img src="/images/Snipaste_2023-03-23_09-36-23.png" srcset="/img/loading.gif" lazyload></p>
+<h5>三，启动nginx镜像</h5>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run --name nginx80 -d -p 80:80 -v /opt/nginx/html:/usr/share/nginx/html -v /opt/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v /opt/nginx/logs:/var/log/nginx -v /opt/nginx/conf.d:/etc/nginx/conf.d nginx<br></code></pre></td></tr></table></figure>
+
+
+<h1>🍔Docker部署后端Springboot的jar包</h1>
+
+<h5>首先先编写dockerfile</h5>
+
+<p>在opt里创建demo文件，然后在demo文件中放置app.jar和Dockerfile,</p>
+<p><strong><em>&#x2F;opt 这个目录是一些大型软件的安装目录，或者是一些服务程序的安装目录 。</em>*</strong></p>
+<p><img src="/images/Snipaste_2023-03-23_09-41-01.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs tex">FROM openjdk:17-jdk<br>VOLUME /tmp<br>COPY app.jar app.jar<br>ENV TZ=Asia/Shanghai<br>RUN bash -c &#x27;touch /app.jar&#x27;<br>ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]<br></code></pre></td></tr></table></figure>
+
+<p>有了dockerfile以后</p>
+<p>运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker build -t main .<br></code></pre></td></tr></table></figure>
+
+<p>其次</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -d -p 9920:9920 main:latest<br></code></pre></td></tr></table></figure>
+
+<p><img src="/images/Snipaste_2023-03-23_09-46-32.png" srcset="/img/loading.gif" lazyload></p>
+<h1>最后打开浏览器</h1>
+
+<p>并没有报后端服务错误，说明已经成功。</p>
+<p>（ps:因为版权问题，暂时不放图片)</p>
+<p>这个方法是可行的。😁</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>docker部署前后端分离项目</div>
+      <div>http://example.com/2023/04/19/docker部署前后端分离项目/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>April 19, 2023</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/04/19/Go%E8%AF%AD%E8%A8%80%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/" title="Go语言详细教程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Go语言详细教程</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/04/19/mysql%E5%AE%B9%E5%99%A8%E6%8C%81%E4%B9%85%E5%8C%96/" title="mysql容器持久化">
+                        <span class="hidden-mobile">mysql容器持久化</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/love.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiaoxingxing.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/caidai.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/xiantiao.js"></script>
+<script src="//cdn.jsdelivr.net/gh/bynotes/texiao/source/js/yinghua.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/runtime.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/DynamicRibbon.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
