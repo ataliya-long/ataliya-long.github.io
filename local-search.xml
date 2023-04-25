@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>Linux磁盘挂载</title>
+    <link href="/2023/04/25/Linux%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/"/>
+    <url>/2023/04/25/Linux%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/</url>
+    
+    <content type="html"><![CDATA[<h1>Linux磁盘：如何把一块磁盘挂载😍</h1><h5>首先先执行dh -h，查看电脑的硬盘信息,如果磁盘没有挂载的话就无法显示</h5><p>1.<code>dh -h</code></p><h5>再使用fdisk -l查看所有磁盘信息包括未加载的磁盘</h5><p>2.<code>fdisk -l</code></p><h5>然后再查看磁盘挂载的区域</h5><p>3.<code>lsblk</code></p><h5>接下来就是分区的操作了，首先用fdisk进行分区</h5><p>4.<code>fdisk /dev/sdb</code>   这里的&#x2F;dev&#x2F;sdb是为挂载的磁盘信息，以你自己的为例，</p><p>执行完以后，会出现提示信息，按照本教程依次选择：m –&gt; n –&gt; p –&gt; 1 –&gt; wq的操作</p><h5>另外重读分区表</h5><p>5.<code>partprobe /dev/sdb</code></p><h5>好了，接下来就是用mkf4创建新的文件系统啦，在linux中比较常见是就是ext4文件系统</h5><p>6.<code>mkfs.ext4 /dev/sdb1</code>  这里要注意的是sdb1而不是sdb，因为前面已经格式化过了，所以sdb1也就是sdb</p><h5>然后创建要挂载的目录,下面以创建data为例</h5><p>7.<code>mkdir /data</code></p><h5>使用mount来进行目录的挂载</h5><p>8.<code>mount /dev/sdb1 /data</code></p><p>到这部已经成功挂载，但是这个只是暂时的，如果重启，白弄。</p><h5>编辑 /etc/fstab 永久挂载目录</h5><p>vi &#x2F;etc&#x2F;fstab</p><p>进入后加入一条：</p><p><code>/dev/sdb1   /data   ext4   defaults 0 0</code></p><h5>然后就成功啦</h5><p>​                  </p><p>​                                                                                                                                                       </p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Go语言详细教程</title>
     <link href="/2023/04/19/Go%E8%AF%AD%E8%A8%80%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/"/>
     <url>/2023/04/19/Go%E8%AF%AD%E8%A8%80%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B/</url>
