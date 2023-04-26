@@ -16,23 +16,21 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="React.js 安装注意事项  安装  1.安装react: 1npm install -g create-react-app  2.使用npx 创建React应用 12npx create-react-app my-appcd my-app&#x2F;  3.启动项目 1npm start  最简化不必要的文件   左边导航栏删的跟我这差不多一样 App.js: 12345const App &#x3D; ()&#x3D;">
+    <meta name="description" content="一，t &#39;useHistory&#39; was not found in react-router-dom  出现这个问题的原因是react-router-dom没有useHistory ，因为: 1npm install react-router-dom  是一般的v6版本，在v6中使用useNavigate对原来的useHistory进行了替换 123456789101112131415161718">
 <meta property="og:type" content="article">
-<meta property="og:title" content="React.js最小安装">
-<meta property="og:url" content="http://example.com/2023/04/26/React-js%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:title" content="React遇到的问题">
+<meta property="og:url" content="http://example.com/2023/04/26/React%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="阿塔利亚-">
-<meta property="og:description" content="React.js 安装注意事项  安装  1.安装react: 1npm install -g create-react-app  2.使用npx 创建React应用 12npx create-react-app my-appcd my-app&#x2F;  3.启动项目 1npm start  最简化不必要的文件   左边导航栏删的跟我这差不多一样 App.js: 12345const App &#x3D; ()&#x3D;">
+<meta property="og:description" content="一，t &#39;useHistory&#39; was not found in react-router-dom  出现这个问题的原因是react-router-dom没有useHistory ，因为: 1npm install react-router-dom  是一般的v6版本，在v6中使用useNavigate对原来的useHistory进行了替换 123456789101112131415161718">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/react.png">
-<meta property="article:published_time" content="2023-04-26T02:10:47.000Z">
-<meta property="article:modified_time" content="2023-04-26T02:11:40.554Z">
+<meta property="article:published_time" content="2023-04-26T02:14:48.000Z">
+<meta property="article:modified_time" content="2023-04-26T02:15:15.611Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/images/react.png">
   
   
   
-  <title>React.js最小安装 - 阿塔利亚-</title>
+  <title>React遇到的问题 - 阿塔利亚-</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +193,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="React.js最小安装"></span>
+            <span id="subtitle" data-typed-text="React遇到的问题"></span>
           
         </div>
 
@@ -206,7 +204,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-26 10:10" pubdate>
+        <time datetime="2023-04-26 10:14" pubdate>
           April 26, 2023 am
         </time>
       </span>
@@ -219,7 +217,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          539 字
+          1.5k 字
         
       </span>
     
@@ -231,7 +229,7 @@
         
         
           <!-- compatible with older versions-->
-          5 分钟
+          13 分钟
         
       </span>
     
@@ -269,37 +267,33 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">React.js最小安装</h1>
+            <h1 style="display: none">React遇到的问题</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>React.js 安装注意事项</h1>
+                <h2>一，t 'useHistory' was not found in react-router-dom</h2>
 
-<h5>安装</h5>
+<p>出现这个问题的原因是react-router-dom没有useHistory ，因为:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs jsx">npm install react-router-dom<br></code></pre></td></tr></table></figure>
 
-<p>1.安装react:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install -g create-react-app<br></code></pre></td></tr></table></figure>
+<p>是一般的v6版本，在v6中使用useNavigate对原来的useHistory进行了替换</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-comment">// 👇️ import useNavigate</span><br><span class="hljs-keyword">import</span> &#123;useNavigate&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-router-dom&#x27;</span>;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">App</span>(<span class="hljs-params"></span>) &#123;<br>  <span class="hljs-keyword">const</span> navigate = <span class="hljs-title function_">useNavigate</span>();<br><br>  <span class="hljs-keyword">const</span> <span class="hljs-title function_">handleClick</span> = (<span class="hljs-params"></span>) =&gt; &#123;<br>    <span class="hljs-comment">// 👇️ navigate programmatically</span><br>    <span class="hljs-title function_">navigate</span>(<span class="hljs-string">&#x27;/about&#x27;</span>);<br>  &#125;;<br><br>  <span class="hljs-keyword">return</span> (<br>    <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">&#123;handleClick&#125;</span>&gt;</span>Navigate to About<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span><br>  );<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
-<p>2.使用npx 创建React应用</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">npx create-react-app my-app<br>cd my-app/<br></code></pre></td></tr></table></figure>
+<h2>二，如何创建react脚手架</h2>
 
-<p>3.启动项目</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm start<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cnpm install -g create-react-app<br>create-react-app my-app<br>cd my-app/<br>npm start<br></code></pre></td></tr></table></figure>
 
-<h5>最简化不必要的文件</h5>
+<h2>三，export 'Switch' (imported as 'Switch') was not found in 'react-router-dom'</h2>
 
-<p><img src="/images/react.png" srcset="/img/loading.gif" lazyload></p>
-<p>左边导航栏删的跟我这差不多一样</p>
-<p>App.js:</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>)=&gt; &#123;<br>  <br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;<br></code></pre></td></tr></table></figure>
+<p>“react-router-dom”导入Switch，但似乎忽略了在React Router v6中Switch已经被重命名为Routes。请按照以下步骤更新代码：</p>
+<ol>
+<li>在index.js中，使用Routes替换Switch：</li>
+</ol>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs JSX">javascriptCopy codeimport <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom&#x27;</span>;<br><span class="hljs-keyword">import</span> &#123; <span class="hljs-title class_">BrowserRouter</span> <span class="hljs-keyword">as</span> <span class="hljs-title class_">Router</span>, <span class="hljs-title class_">Route</span>, <span class="hljs-title class_">Routes</span> &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-router-dom&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App&#x27;</span>;<br><span class="hljs-keyword">import</span> <span class="hljs-title class_">LoginPage</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./LoginPage&#x27;</span>;<br><br><span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">render</span>(<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.StrictMode</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">Router</span>&gt;</span></span><br><span class="language-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">Routes</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/login&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">LoginPage</span> /&gt;</span>&#125; /&gt;</span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">Route</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/app&quot;</span> <span class="hljs-attr">element</span>=<span class="hljs-string">&#123;</span>&lt;<span class="hljs-attr">App</span> /&gt;</span>&#125; /&gt;</span><br><span class="language-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">Routes</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">Router</span>&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">React.StrictMode</span>&gt;</span></span>,<br>  <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>)<br>);<br></code></pre></td></tr></table></figure>
 
-<p>index.css:</p>
-<p>全删</p>
-<p>index.js:</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom/client&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App&#x27;</span><br><br><span class="hljs-keyword">const</span> root = <span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">createRoot</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>));<br>root.<span class="hljs-title function_">render</span>(<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.StrictMode</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">React.StrictMode</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure>
-
-<p>这样最简React.js就创建好了</p>
+<p>请注意，Routes替换了Switch，并且现在需要将组件通过element prop传递给Route。</p>
+<p>更新之后，代码应该可以正常工作。</p>
 
                 
               </div>
@@ -317,8 +311,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>React.js最小安装</div>
-      <div>http://example.com/2023/04/26/React-js最小安装/</div>
+      <div>React遇到的问题</div>
+      <div>http://example.com/2023/04/26/React遇到的问题/</div>
     </div>
     <div class="license-meta">
       
@@ -362,18 +356,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/26/React%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="React遇到的问题">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">React遇到的问题</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/25/Linux%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/" title="Linux磁盘挂载">
-                        <span class="hidden-mobile">Linux磁盘挂载</span>
+                      <a href="/2023/04/26/React-js%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/" title="React.js最小安装">
+                        <span class="hidden-mobile">React.js最小安装</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
