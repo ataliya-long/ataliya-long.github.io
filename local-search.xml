@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>React.js最小安装</title>
+    <link href="/2023/04/26/React-js%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/"/>
+    <url>/2023/04/26/React-js%E6%9C%80%E5%B0%8F%E5%AE%89%E8%A3%85/</url>
+    
+    <content type="html"><![CDATA[<h1>React.js 安装注意事项</h1><h5>安装</h5><p>1.安装react:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm install -g create-react-app<br></code></pre></td></tr></table></figure><p>2.使用npx 创建React应用</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">npx create-react-app my-app<br>cd my-app/<br></code></pre></td></tr></table></figure><p>3.启动项目</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">npm start<br></code></pre></td></tr></table></figure><h5>最简化不必要的文件</h5><p><img src="/images/react.png"></p><p>左边导航栏删的跟我这差不多一样</p><p>App.js:</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">const</span> <span class="hljs-title function_">App</span> = (<span class="hljs-params"></span>)=&gt; &#123;<br>  <br>&#125;<br><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">App</span>;<br></code></pre></td></tr></table></figure><p>index.css:</p><p>全删</p><p>index.js:</p><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs jsx"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">ReactDOM</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;react-dom/client&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-string">&#x27;./index.css&#x27;</span><br><span class="hljs-keyword">import</span> <span class="hljs-title class_">App</span> <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;./App&#x27;</span><br><br><span class="hljs-keyword">const</span> root = <span class="hljs-title class_">ReactDOM</span>.<span class="hljs-title function_">createRoot</span>(<span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;root&#x27;</span>));<br>root.<span class="hljs-title function_">render</span>(<br>  <span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">React.StrictMode</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span></span><br><span class="language-xml">  <span class="hljs-tag">&lt;/<span class="hljs-name">React.StrictMode</span>&gt;</span></span><br>);<br></code></pre></td></tr></table></figure><p>这样最简React.js就创建好了</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Linux磁盘挂载</title>
     <link href="/2023/04/25/Linux%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/"/>
     <url>/2023/04/25/Linux%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/</url>
