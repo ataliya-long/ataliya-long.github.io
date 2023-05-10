@@ -16,21 +16,22 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="关于新安装的机器ip a，无法查到ip地址，无法进行XSHELL连接     根据ip a查询的ens33网卡没有ip地址 1vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33  打开后把ONBOOT&#x3D;no 改为 ONBOOT&#x3D;yes 保存退出，然后reboot，然后就可以查看ip地址了，查看之前先看看sshd服务是否开启 (水一期)">
+    <meta name="description" content="第一章，什么是Docker  1.Docker起源  Docker是一Go语言开发的开源容器化平台，它可以让开发者和系统管理员在不同的计算机上创建、部署和运行应用程序和服务。Docker的起源可以追溯到2013年，当时它是一个基于DotCloud平台的内部项目。 DotCloud是一家云计算公司，提供开发者在云端构建、部署和扩展应用程序的服务。在开发和维护多个服务和应用程序时，DotCloud的团">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ip a查不到IP地址?">
-<meta property="og:url" content="http://example.com/2023/04/26/ip-a%E6%9F%A5%E4%B8%8D%E5%88%B0IP%E5%9C%B0%E5%9D%80/index.html">
+<meta property="og:title" content="自写Docker教程">
+<meta property="og:url" content="http://example.com/2023/05/10/%E8%87%AA%E5%86%99Docker%E6%95%99%E7%A8%8B/index.html">
 <meta property="og:site_name" content="阿塔利亚-">
-<meta property="og:description" content="关于新安装的机器ip a，无法查到ip地址，无法进行XSHELL连接     根据ip a查询的ens33网卡没有ip地址 1vi &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-ens33  打开后把ONBOOT&#x3D;no 改为 ONBOOT&#x3D;yes 保存退出，然后reboot，然后就可以查看ip地址了，查看之前先看看sshd服务是否开启 (水一期)">
+<meta property="og:description" content="第一章，什么是Docker  1.Docker起源  Docker是一Go语言开发的开源容器化平台，它可以让开发者和系统管理员在不同的计算机上创建、部署和运行应用程序和服务。Docker的起源可以追溯到2013年，当时它是一个基于DotCloud平台的内部项目。 DotCloud是一家云计算公司，提供开发者在云端构建、部署和扩展应用程序的服务。在开发和维护多个服务和应用程序时，DotCloud的团">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-04-26T07:15:51.000Z">
-<meta property="article:modified_time" content="2023-04-26T07:19:43.306Z">
+<meta property="article:published_time" content="2023-05-10T03:31:18.000Z">
+<meta property="article:modified_time" content="2023-05-10T03:50:36.798Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Docker基础教程">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>ip a查不到IP地址? - 阿塔利亚-</title>
+  <title>自写Docker教程 - 阿塔利亚-</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -205,7 +206,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="ip a查不到IP地址?"></span>
+            <span id="subtitle" data-typed-text="自写Docker教程"></span>
           
         </div>
 
@@ -216,8 +217,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-26 15:15" pubdate>
-          April 26, 2023 pm
+        <time datetime="2023-05-10 11:31" pubdate>
+          May 10, 2023 am
         </time>
       </span>
     
@@ -229,7 +230,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          183 字
+          645 字
         
       </span>
     
@@ -241,7 +242,7 @@
         
         
           <!-- compatible with older versions-->
-          2 分钟
+          6 分钟
         
       </span>
     
@@ -279,22 +280,20 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">ip a查不到IP地址?</h1>
+            <h1 style="display: none">自写Docker教程</h1>
             
             
               <div class="markdown-body">
                 
-                <h1>关于新安装的机器ip a，无法查到ip地址，无法进行XSHELL连接</h1>
+                <h1>第一章，什么是Docker</h1>
 
-<ol>
-<li></li>
-</ol>
-<p>根据ip a查询的ens33网卡没有ip地址</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vi /etc/sysconfig/network-scripts/ifcfg-ens33<br></code></pre></td></tr></table></figure>
+<h5>1.Docker起源</h5>
 
-<p>打开后把ONBOOT&#x3D;no 改为 ONBOOT&#x3D;yes</p>
-<p>保存退出，然后reboot，然后就可以查看ip地址了，查看之前先看看sshd服务是否开启</p>
-<p>(水一期)</p>
+<p>Docker是一Go语言开发的开源容器化平台，它可以让开发者和系统管理员在不同的计算机上创建、部署和运行应用程序和服务。Docker的起源可以追溯到2013年，当时它是一个基于DotCloud平台的内部项目。</p>
+<p>DotCloud是一家云计算公司，提供开发者在云端构建、部署和扩展应用程序的服务。在开发和维护多个服务和应用程序时，DotCloud的团队经常面临环境依赖和配置管理的挑战。他们发现，不同的应用程序和服务需要不同的运行环境和依赖库，而这些环境和依赖库之间可能存在冲突和版本不兼容的问题。为了解决这些问题，DotCloud的团队开始研究基于容器技术的解决方案，并在2013年推出了Docker项目。</p>
+<p>Docker项目最初是一个基于Linux内核的容器引擎，它可以在同一主机上运行多个独立的容器实例，每个容器实例都包含一个完整的运行时环境和应用程序。与虚拟机相比，Docker容器更加轻量级和灵活，可以更高效地利用计算机资源。此外，Docker还提供了一套简单易用的命令行工具和API，使得开发者和系统管理员可以方便地创建、打包、部署和管理容器。</p>
+<p>自推出以来，Docker迅速获得了广泛的关注和使用，成为容器化技术领域的先驱和领导者之一。Docker公司也在不断地推出新的产品和服务，如Docker Hub、Docker Swarm和Docker Enterprise等，为企业和开发者提供更加全面和专业的容器化解决方案。</p>
+<h5>2.Linux容器技术和虚拟化</h5>
 
                 
               </div>
@@ -304,6 +303,13 @@
               <div class="post-metas my-3">
   
   
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Docker%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/">#Docker基础教程</a>
+      
+    </div>
+  
 </div>
 
 
@@ -312,8 +318,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>ip a查不到IP地址?</div>
-      <div>http://example.com/2023/04/26/ip-a查不到IP地址/</div>
+      <div>自写Docker教程</div>
+      <div>http://example.com/2023/05/10/自写Docker教程/</div>
     </div>
     <div class="license-meta">
       
@@ -325,7 +331,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>April 26, 2023</div>
+          <div>May 10, 2023</div>
         </div>
       
       
@@ -357,9 +363,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/10/%E8%87%AA%E5%86%99Docker%E6%95%99%E7%A8%8B/" title="自写Docker教程">
+                      <a href="/2023/05/10/%E8%87%AA%E5%86%99react%E6%95%99%E7%A8%8B/" title="自写react教程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">自写Docker教程</span>
+                        <span class="hidden-mobile">自写react教程</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
@@ -367,8 +373,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/26/React%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="React遇到的问题">
-                        <span class="hidden-mobile">React遇到的问题</span>
+                      <a href="/2023/04/26/ip-a%E6%9F%A5%E4%B8%8D%E5%88%B0IP%E5%9C%B0%E5%9D%80/" title="ip a查不到IP地址?">
+                        <span class="hidden-mobile">ip a查不到IP地址?</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
