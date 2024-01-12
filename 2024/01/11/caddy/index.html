@@ -132,7 +132,31 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        
+        <h1>Caddy解决404问题</h1>
+
+<p>这个问题可能是由于Caddy默认不支持单页应用（SPA）的路由机制导致的。当您刷新浏览器时，请求会直接发送到Caddy服务器，由于Caddy不知道如何处理这个特定的路由，因此返回404错误。要解决这个问题，您需要配置Caddyfile来处理单页应用的路由。<br>以下是一个Caddyfile的示例配置，它为您的单页应用提供了一个通用的回退机制。它将确保所有未知的请求都会回退到您的index.html文件，这将允许前端路由器正确处理请求：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">your<span class="built_in">_</span>domain.com</span><br><span class="line"></span><br><span class="line">root * /path/to/your/project</span><br><span class="line">file<span class="built_in">_</span>server</span><br><span class="line">try<span class="built_in">_</span>files &#123;path&#125; /index.html</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，请替换your_domain.com为您的实际域名，将&#x2F;path&#x2F;to&#x2F;your&#x2F;project替换为您的项目文件夹的路径。<br>这个配置文件定义了一个try_files指令，它会尝试按照顺序提供列表中的文件。如果当前请求的路径在文件系统中不存在，它会回退到&#x2F;index.html文件。这将确保当您刷新浏览器时，前端路由器可以接管并正确处理请求。<br>保存更改后，重新启动Caddy服务以应用新的配置。现在，您的单页应用应该可以在刷新浏览器后正常工作。</p>
+<p>在Caddyfile中，{path}是一个占位符，表示当前请求的路径。当使用try_files指令时，它会尝试按照列表中的顺序提供文件。在这个例子中:</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try<span class="built_in">_</span>files &#123;path&#125; /index.html</span><br></pre></td></tr></table></figure>
+
+<p>{path}表示当前请求的实际路径。try_files首先尝试使用这个路径来查找文件。如果找到了匹配的文件，Caddy会将该文件提供给客户端。如果没有找到匹配的文件，try_files将按照列表中的顺序尝试下一个选项，这里是&#x2F;index.html。<br>所以{path}确保Caddy首先尝试提供当前请求的实际路径。如果找不到对应的文件，它将回退到&#x2F;index.html。这在处理单页应用（SPA）中的前端路由时非常有用，因为这样可以确保当请求的路径在文件系统中不存在时，前端路由器仍然可以接管并正确处理请求。</p>
+<p>如果这个以上方法不成功的话，可以使用以下配置：</p>
+<p>你的问题可能与Caddy配置文件的处理顺序有关。请尝试以下Caddyfile配置：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">your<span class="built_in">_</span>domain.com</span><br><span class="line"></span><br><span class="line">root * /path/to/your/project</span><br><span class="line">file<span class="built_in">_</span>server</span><br><span class="line">rewrite * &#123;path&#125; /index.html</span><br><span class="line">route &#123;</span><br><span class="line">    try<span class="built_in">_</span>files &#123;path&#125; /index.html</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个配置文件首先尝试使用rewrite指令重写所有请求。然后，它使用route块来定义一个处理请求的流程。try_files指令被包含在route块内，它首先尝试提供当前请求的实际路径（{path}），如果找不到匹配的文件，则会回退到&#x2F;index.html。<br>请将your_domain.com替换为您的实际域名，将&#x2F;path&#x2F;to&#x2F;your&#x2F;project替换为您的项目文件夹的路径。<br>更新Caddyfile后，重新启动Caddy服务以应用新的配置。刷新浏览器后，您的单页应用应该可以正常工作了。如果问题仍然存在，请检查Caddy的日志以获取有关错误的更多详细信息，并确保您的项目文件夹和index.html文件的路径正确。</p>
+<h1>Caddy日志</h1>
+
+<p>Caddy的日志位置取决于您的操作系统和Caddy的安装方式。以下是几种可能的日志位置：<br>如果您是通过命令行手动运行Caddy（例如：caddy run），则日志将直接输出到命令行终端。<br>如果您是使用Systemd管理的Caddy服务，可以使用以下命令查看日志：<br><code>sudo journalctl -u caddy --since today</code><br>这将显示今天的Caddy服务日志。您可以通过调整–since参数来查看更早的日志。<br>如果Caddy已配置为将日志写入文件，那么您需要查找Caddyfile中指定的日志文件路径。例如，Caddyfile中可能包含如下配置：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">log &#123;</span><br><span class="line">    output file /var/log/caddy/caddy.log</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，您可以在&#x2F;var&#x2F;log&#x2F;caddy&#x2F;caddy.log找到日志。<br>如果您不确定如何配置Caddy以将日志输出到文件，请参考以下Caddyfile示例：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">your_domain.com</span><br><span class="line"></span><br><span class="line">root * /path/to/your/project</span><br><span class="line">file_server</span><br><span class="line">try_files &#123;path&#125; /index.html</span><br><span class="line"></span><br><span class="line">log &#123;</span><br><span class="line">    output file /path/to/your/log/caddy.log</span><br><span class="line">    format console</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将&#x2F;path&#x2F;to&#x2F;your&#x2F;log替换为您希望存储日志文件的目录。这将使Caddy将其日志输出到指定的文件中。<br>不同的操作系统和安装方式可能会影响Caddy日志的位置。如果您无法在上述位置找到日志，请查看Caddy文档或您操作系统的文档以获取更多详细信息。</p>
+
       </section>
 
       
