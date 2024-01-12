@@ -22,7 +22,7 @@
 
   
 
-  <title>search | 小塔的个人博客</title>
+  <title>安装卸载mysql | 小塔的个人博客</title>
 
   
 
@@ -46,7 +46,7 @@
   <div class="root-container">
     
 <!-- header container -->
-<header class="header-container">
+<header class="header-container post">
   
     <div class="post-image" style="background-image: url(https://img.xwyue.com/i/2024/01/11/659fdf8ca46a1.png)"></div>
   
@@ -94,36 +94,188 @@
 
   
   
-
-  
-  
     <div class="header-content">
-      <div class="post-text layout-block layout-padding">
-        <h1 class="title-wrap">search</h1>
-        
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">安装卸载mysql</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ataliya</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-01-12T07:14:19.000Z" itemprop="datePublished">2024-01-12</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
       </div>
     </div>
+  
+
+  
   
   
 </header>
 
-    <!-- 分页(其他自定义页面) -->
+    <!-- 文章 -->
 
-<!-- 自定义页面 -->
-
+<!-- 文章内容 -->
 <div class="body-container">
   <article class="content-container layout-block post-container">
     <div class="article-info">
       
+      
+      
+      
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        
+        <h1>一，Linux的YUM在线的MySQL5.7安装😘</h1>
+
+<h3>工欲善其事必先利其器，要学习Mysql的知识，首先先必须安装Mysql，本教程提供两种Mysql的安装方法</h3>
+
+<p>问题描述一般通过yum的在线安装，但是如果更换源以后会出现mysql-server按装包找不到的情况，这时候可以考虑用rpm包来安装，最后再执行yum install mysql-server</p>
+<p>rpm包的安装方式：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1ieo0UsSjlRa-Dt-QY9tDUw?_at_=1669281613627#list/path=%2Fsharelink2349022412-61133878885168%2Fmysql&parentPath=%2Fsharelink2349022412-61133878885168">mysql_免费高速下载|百度网盘-分享无限制 (baidu.com)</a> ,具体如何放文件，自己决定，可以通过SFTP来传输。</p>
+<h5>φ(*￣0￣)安装数据库</h5>
+
+<p>1.传输完成后：</p>
+<p><code>yum -y install 你下的包.rpm </code> 这样做的原因是阿里官网的yum库没有此软件包，所以你必须自己安装依赖。</p>
+<p>2.如果执行成功后：</p>
+<p><code> yum -y install mysql-server</code></p>
+<p>3.启动mysql服务：</p>
+<p><code>systemctl start mysqld</code>    或者 <code>service mysqld start</code></p>
+<p>4.设置mysql服务自启动</p>
+<p><code>systemctl enable mysqld</code></p>
+<p>5.查看数据库密码</p>
+<p><code>cat /var/log/mysqld.log | grep password</code> , 或着你不想查看也可以，可以在 &#x2F;etc&#x2F;my.cnf 中编辑 ，加入一句话叫 <code>skip-grant-tables</code></p>
+<p>这句话的意思是说，可以不用输入密码进入mysql服务器中。</p>
+<p><code>mysql -uroot -p</code></p>
+<h5>q(≧▽≦q)当进入数据库中</h5>
+
+<p>首先先执行一编 <code>flush privileges;</code></p>
+<p>然后再进入修改密码：<code>set password for 'root'@'localhost'=password('你的密码');</code>，如果提示密码不符合规定的话。（ps 如果是新版的mysql的话直接输入<code>set password="xxxx"</code>就行</p>
+<p>就执行 <code>set global validate_password_policy=0;  #将密码强度设置为最低</code></p>
+<p>然后 <code>flush privileges;</code>最后再执行一下你的set密码的语句，然后再<code>flush privileges;</code></p>
+<p>最后<code>exit</code>，再进入mysql试试。</p>
+<h5>（￣︶￣）↗　Mysql的远程连接</h5>
+
+<p>当一切准备就绪后，如果成功进入mysql了,看到mysql&gt;的话，那么就试试远程连接</p>
+<p>首先先 ：<code>use mysql;</code></p>
+<p>第二步 ：<code>update user set host='%' where user ='root';</code></p>
+<p>最后 ：  <code>flush privileges;</code></p>
+<p>最后，最后，最后 ！！！！！ 如果连接不成功的话，那么请关闭防火墙，<code>systemctl stop firewalld.service</code><br>或者 <code>firewall-cmd --zone=public --add-port=3306/tcp --permanent</code><br>如果您使用阿里云的云服务器，因为作者是使用本机的linux服务器的，所以多一个步骤就是将在阿里云开启3306端口。</p>
+<h1>二，Linux的离线的MySQL5.7安装😘</h1>
+
+<p>( •̀ ω •́ )✧首先先自己下载 <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a> Mysql的离线包，选择第二个64位的 Linux-Generic</p>
+<img src="./doc/1.PNG" style="zoom:75%;" />
+
+<p>下载了包以后用SFTP软件传到你想安装的目录下</p>
+<p><strong>第一步</strong>：先看看Linux服务器中有没有 Mariadb，有的话先卸载，卸载没遇到过，可以去百度，以为作者的服务器的啥样不是</p>
+<p><strong>第二步</strong>：删除&#x2F;etc&#x2F;my.cnf文件，因为会影响配置，所以先卸载了再说，后面可以再加上去</p>
+<p><strong>第三步</strong>：创建mysql用户组: <code>groupadd mysql</code></p>
+<p><strong>第四步</strong>：加入到mysql用户组里面 <code>useradd -g mysql mysql</code></p>
+<h5>注意！！作者之前操作问题，好像有mysql用户组，如果有的话，先执行一下，提升有的话，可以跳过第三部和第四步</h5>
+
+<p>进入你创建的目录下，比如 <code>mkdir /data</code>，将你的压缩包放在data下面，然后执行解压操作：<code>tar -zxvf xxxxx.tar.gz</code></p>
+<p>解压以后将解压的文件进行重命名操作 <code>mv xxxx mysql</code></p>
+<p>然后新建一个<code>vi /etc/my.cnf</code>，并且在里面写</p>
+<p>[mysql]<br>default-character-set&#x3D;utf8<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>[mysqld]<br>skip-name-resolve<br>port&#x3D;3306<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>basedir&#x3D;&#x2F;data&#x2F;mysql      #主要这里是mysql安装路径<br>datadir&#x3D;&#x2F;data&#x2F;mysql&#x2F;data   #这里主要是mysql存储路径，以你创建的为例<br>max_connections&#x3D;200<br>character-set-server&#x3D;utf8<br>default-storage-engine&#x3D;INNODB<br>lower_case_table_names&#x3D;1<br>max_allowed_packet&#x3D;16M</p>
+<img src="./doc/2.PNG" alt="如图" style="zoom:75%;" />
+
+<p>:x保存退出</p>
+<p><strong>第五步</strong>：设置mysql用户：</p>
+<p><code>mkdir /var/lib/mysql </code></p>
+<p><code>mkdir /var/lib/mysql/mysql </code></p>
+<p><code>chown -R mysql:mysql /var/lib/mysql </code></p>
+<p><code>chown -R mysql:mysql /var/lib/mysql/mysql</code></p>
+<p><strong>第六步</strong>：</p>
+<p>进入安装mysql软件目录</p>
+<p><code>cd /data/mysql</code></p>
+<p><code>chown -R mysql:mysql ./</code></p>
+<p><code>cd bin</code></p>
+<p><code>./mysqld --user=mysql --basedir=/data/mysql --datadir=/data/mysql/data/ --initialize  </code></p>
+<p><code>cd /data/mysql</code></p>
+<p><code>chown -R mysql:mysql data                   <em>#修改当前data目录拥有者为mysql用户</em></code></p>
+<p><strong>第七步</strong>：</p>
+<p>修改权限：</p>
+<p><code>chmod +x /etc/my.cnf</code></p>
+<h3 id="复制启动脚本到资源目录"><a href="#复制启动脚本到资源目录" class="headerlink" title="复制启动脚本到资源目录"></a>复制启动脚本到资源目录</h3><p><code>cd /home/mysql/ cp ./support-files/mysql.server /etc/init.d/mysqld </code></p>
+<p>加入权限: <code>chmod +x /etc/init.d/mysqld</code></p>
+<h3 id="将mysqld服务加入到系统服务"><a href="#将mysqld服务加入到系统服务" class="headerlink" title="将mysqld服务加入到系统服务"></a>将mysqld服务加入到系统服务</h3><p><code>chkconfig --add mysqld</code></p>
+<h3 id="检查mysqld服务是否已经生效"><a href="#检查mysqld服务是否已经生效" class="headerlink" title="检查mysqld服务是否已经生效"></a>检查mysqld服务是否已经生效</h3><p><code>chkconfig --list mysqld</code>，如果出现mysqld 0:off 1:off 2:on 3:on 4:on 5:on 6 说明成功</p>
+<h3 id="将mysql的bin目录加入PATH环境变量，编辑-etc-profile文件"><a href="#将mysql的bin目录加入PATH环境变量，编辑-etc-profile文件" class="headerlink" title="将mysql的bin目录加入PATH环境变量，编辑&#x2F;etc&#x2F;profile文件"></a>将mysql的bin目录加入PATH环境变量，编辑&#x2F;etc&#x2F;profile文件</h3><p><code>vi /etc/profile</code></p>
+<p><code>export PATH=$PATH:/data/mysql/bin</code></p>
+<p><code>source /etc/profile</code> #最后执行生效</p>
+<h4>🐎到最后mysql离线版本算是安装完成了，后面远程连接，修改密码操作参考第一个yum在线安教程的连接方法。
+
+
+
+<h1>三，Linux完全卸载MySQL5.7😘</h1>
+
+<p>如果要完完全全删除mysql，不能用yum remove 操作，因为删不干净，还会有残留包，因为作者是离线安装所以没有图片展示</p>
+<p><strong>首先</strong>：先查看mysql的组件包:</p>
+<p><code>rpm -qa | grep -i mysql</code></p>
+<p><strong>第二步</strong>：关闭mysql服务：</p>
+<p><code>service mysqld stop</code> 或者 <code>systemctl stop mysqld</code></p>
+<p><strong>第三步</strong>：查看mysql对应文件夹:</p>
+<p><code>find / -name mysql</code></p>
+<p><strong>第四步</strong>：删除组件：rpm -ev –nodeps xxxx组件包名</p>
+<p><strong>第五步</strong>：删除mysql所以有配置文件夹：</p>
+<p><code>rm -rf /var/lib/mysql</code>,不止这么多，第三步列出来的有什么就删除什么</p>
+<p><strong>最后</strong>：执行第一步和第三步如何啥也没有就说明彻底卸载了</p>
+
       </section>
 
       
       
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-machine/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">安装docker machine</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/01/11/caddy/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">caddy 出现的问题</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
 
-      
-      
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
     </div>
     <div class="widget-info">
       <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
@@ -160,6 +312,8 @@
     </div>
   </div>
 </section>
+
+      
 
       
 <section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
@@ -205,7 +359,6 @@
     </div>
   </article>
 </div>
-
 
     <!-- footer container -->
 <footer id="footer" class="footer">

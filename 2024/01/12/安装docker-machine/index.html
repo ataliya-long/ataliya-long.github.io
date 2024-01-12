@@ -22,7 +22,7 @@
 
   
 
-  <title>search | 小塔的个人博客</title>
+  <title>安装docker machine | 小塔的个人博客</title>
 
   
 
@@ -46,7 +46,7 @@
   <div class="root-container">
     
 <!-- header container -->
-<header class="header-container">
+<header class="header-container post">
   
     <div class="post-image" style="background-image: url(https://img.xwyue.com/i/2024/01/11/659fdf8ca46a1.png)"></div>
   
@@ -94,36 +94,133 @@
 
   
   
-
-  
-  
     <div class="header-content">
-      <div class="post-text layout-block layout-padding">
-        <h1 class="title-wrap">search</h1>
-        
+      <div class="post-text layout-block">
+        <div class="layout-margin">
+          <h1 class="title-wrap">安装docker machine</h1>
+          <h2 class="title-sub-wrap">
+            <strong>Ataliya</strong>
+            <span>发布于</span>
+            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+          </h2>
+          
+          
+          <ul class="wrap-list dark">
+  
+</ul>
+          <ul class="wrap-list dark">
+  
+</ul>
+        </div>
       </div>
     </div>
+  
+
+  
   
   
 </header>
 
-    <!-- 分页(其他自定义页面) -->
+    <!-- 文章 -->
 
-<!-- 自定义页面 -->
-
+<!-- 文章内容 -->
 <div class="body-container">
   <article class="content-container layout-block post-container">
     <div class="article-info">
       
+      
+      
+      
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        
+        <h2>安装Docker Machine</h2>
+
+<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
+<p><strong>对于 macOS 和 Windows：</strong></p>
+<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
+<p><strong>对于 Linux：</strong></p>
+<ol>
+<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
+
+<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
+</li>
+<li><p>添加可执行权限：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
+
+<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
+</li>
+</ol>
+<p><strong>安装 Bash Completion（可选）：</strong></p>
+<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
+<ul>
+<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
+
+<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
+</li>
+</ul>
+<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>重新启动终端以使更改生效。</p>
+<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+
       </section>
 
       
       
+        <nav class="article-nav">
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        </a>
+      
+      <div class="card-text--row">Newer</div>
+    </div>
+  </article>
+</div>
+          
+          
+            <div class="article-nav-item layout-padding">
+  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
+    
+    <div class="card-text">
+      
+        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        </a>
+      
+      <div class="card-text--row">Older</div>
+    </div>
+  </article>
+</div>
+          
+        </nav>
+      
 
-      
-      
+      <section class="page-message-container layout-padding">
+        
+
+
+  
+  
+
+  
+  
+
+
+      </section>
     </div>
     <div class="widget-info">
       <section class="widget-author widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
@@ -160,6 +257,8 @@
     </div>
   </div>
 </section>
+
+      
 
       
 <section class="widet-notice widget-item layout-margin content-padding--primary soft-size--large soft-style--box">
@@ -205,7 +304,6 @@
     </div>
   </article>
 </div>
-
 
     <!-- footer container -->
 <footer id="footer" class="footer">
