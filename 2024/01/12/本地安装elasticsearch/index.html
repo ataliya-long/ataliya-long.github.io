@@ -22,7 +22,7 @@
 
   
 
-  <title>安装卸载mysql | 小塔的个人博客</title>
+  <title>本地安装elasticsearch | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装卸载mysql</h1>
+          <h1 class="title-wrap">本地安装elasticsearch</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:14:19.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-12T07:29:10.000Z" itemprop="datePublished">2024-01-12</time>
           </h2>
           
           
@@ -132,99 +132,28 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h1>一，Linux的YUM在线的MySQL5.7安装😘</h1>
+        <h1>本地安装elasticsearch</h1>
 
-<h3>工欲善其事必先利其器，要学习Mysql的知识，首先先必须安装Mysql，本教程提供两种Mysql的安装方法</h3>
+<p>首先先从网络上下载最新的elasticsearch</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.8.2-linux-x86_64.tar.gz</span></span><br></pre></td></tr></table></figure>
 
-<p>问题描述一般通过yum的在线安装，但是如果更换源以后会出现mysql-server按装包找不到的情况，这时候可以考虑用rpm包来安装，最后再执行yum install mysql-server</p>
-<p>rpm包的安装方式：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1ieo0UsSjlRa-Dt-QY9tDUw?_at_=1669281613627#list/path=%2Fsharelink2349022412-61133878885168%2Fmysql&parentPath=%2Fsharelink2349022412-61133878885168">mysql_免费高速下载|百度网盘-分享无限制 (baidu.com)</a> ,具体如何放文件，自己决定，可以通过SFTP来传输。</p>
-<h5>φ(*￣0￣)安装数据库</h5>
+<p>下载完以后，进行解压操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">tar -xzf elasticsearch-8.8.2-linux-x86_64.tar.gz</span></span><br></pre></td></tr></table></figure>
 
-<p>1.传输完成后：</p>
-<p><code>yum -y install 你下的包.rpm </code> 这样做的原因是阿里官网的yum库没有此软件包，所以你必须自己安装依赖。</p>
-<p>2.如果执行成功后：</p>
-<p><code> yum -y install mysql-server</code></p>
-<p>3.启动mysql服务：</p>
-<p><code>systemctl start mysqld</code>    或者 <code>service mysqld start</code></p>
-<p>4.设置mysql服务自启动</p>
-<p><code>systemctl enable mysqld</code></p>
-<p>5.查看数据库密码</p>
-<p><code>cat /var/log/mysqld.log | grep password</code> , 或着你不想查看也可以，可以在 &#x2F;etc&#x2F;my.cnf 中编辑 ，加入一句话叫 <code>skip-grant-tables</code></p>
-<p>这句话的意思是说，可以不用输入密码进入mysql服务器中。</p>
-<p><code>mysql -uroot -p</code></p>
-<h5>q(≧▽≦q)当进入数据库中</h5>
+<p>进入文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> elasticsearch-8.8.2/bin</span></span><br></pre></td></tr></table></figure>
 
-<p>首先先执行一编 <code>flush privileges;</code></p>
-<p>然后再进入修改密码：<code>set password for 'root'@'localhost'=password('你的密码');</code>，如果提示密码不符合规定的话。（ps 如果是新版的mysql的话直接输入<code>set password="xxxx"</code>就行</p>
-<p>就执行 <code>set global validate_password_policy=0;  #将密码强度设置为最低</code></p>
-<p>然后 <code>flush privileges;</code>最后再执行一下你的set密码的语句，然后再<code>flush privileges;</code></p>
-<p>最后<code>exit</code>，再进入mysql试试。</p>
-<h5>（￣︶￣）↗　Mysql的远程连接</h5>
+<p>开始启动，注意，elasticsearch是不默认root启动的</p>
+<p>需要创建一个用户</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">adduser ela</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">passwd ela</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">chown</span> -R ela elasticsearch/</span></span><br></pre></td></tr></table></figure>
 
-<p>当一切准备就绪后，如果成功进入mysql了,看到mysql&gt;的话，那么就试试远程连接</p>
-<p>首先先 ：<code>use mysql;</code></p>
-<p>第二步 ：<code>update user set host='%' where user ='root';</code></p>
-<p>最后 ：  <code>flush privileges;</code></p>
-<p>最后，最后，最后 ！！！！！ 如果连接不成功的话，那么请关闭防火墙，<code>systemctl stop firewalld.service</code><br>或者 <code>firewall-cmd --zone=public --add-port=3306/tcp --permanent</code><br>如果您使用阿里云的云服务器，因为作者是使用本机的linux服务器的，所以多一个步骤就是将在阿里云开启3306端口。</p>
-<h1>二，Linux的离线的MySQL5.7安装😘</h1>
+<p>然后su ela启动</p>
+<p>启动后在默认配置文件中config&#x2F;elasticsearch.yml中修改以下代码</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># ======================== Elasticsearch Configuration =========================</span><br><span class="line">#</span><br><span class="line"># NOTE: Elasticsearch comes with reasonable defaults for most settings.</span><br><span class="line">#       Before you set out to tweak and tune the configuration, make sure you</span><br><span class="line">#       understand what are you trying to accomplish and the consequences.</span><br><span class="line">#</span><br><span class="line"># The primary way of configuring a node is via this file. This template lists</span><br><span class="line"># the most important settings you may want to configure for a production cluster.</span><br><span class="line">#</span><br><span class="line"># Please consult the documentation for further information on configuration options:</span><br><span class="line"># https://www.elastic.co/guide/en/elasticsearch/reference/index.html</span><br><span class="line">#</span><br><span class="line"># ---------------------------------- Cluster -----------------------------------</span><br><span class="line">#</span><br><span class="line"># Use a descriptive name for your cluster:</span><br><span class="line">#</span><br><span class="line">#cluster.name: my-application</span><br><span class="line">#</span><br><span class="line"># ------------------------------------ Node ------------------------------------</span><br><span class="line">#</span><br><span class="line"># Use a descriptive name for the node:</span><br><span class="line">#</span><br><span class="line">#node.name: node-1</span><br><span class="line">#</span><br><span class="line"># Add custom attributes to the node:</span><br><span class="line">#</span><br><span class="line">#node.attr.rack: r1</span><br><span class="line">#</span><br><span class="line"># ----------------------------------- Paths ------------------------------------</span><br><span class="line">#</span><br><span class="line"># Path to directory where to store the data (separate multiple locations by comma):</span><br><span class="line">#</span><br><span class="line">#path.data: /path/to/data</span><br><span class="line">#</span><br><span class="line"># Path to log files:</span><br><span class="line">#</span><br><span class="line">#path.logs: /path/to/logs</span><br><span class="line">#</span><br><span class="line"># ----------------------------------- Memory -----------------------------------</span><br><span class="line">#</span><br><span class="line"># Lock the memory on startup:</span><br><span class="line">#</span><br><span class="line">#bootstrap.memory_lock: true</span><br><span class="line">#</span><br><span class="line"># Make sure that the heap size is set to about half the memory available</span><br><span class="line"># on the system and that the owner of the process is allowed to use this</span><br><span class="line"># limit.</span><br><span class="line">#</span><br><span class="line"># Elasticsearch performs poorly when the system is swapping the memory.</span><br><span class="line">#</span><br><span class="line"># ---------------------------------- Network -----------------------------------</span><br><span class="line">#</span><br><span class="line"># By default Elasticsearch is only accessible on localhost. Set a different</span><br><span class="line"># address here to expose this node on the network:</span><br><span class="line">#</span><br><span class="line">#network.host: 192.168.0.1</span><br><span class="line">#</span><br><span class="line"># By default Elasticsearch listens for HTTP traffic on the first free port it</span><br><span class="line"># finds starting at 9200. Set a specific HTTP port here:</span><br><span class="line">#</span><br><span class="line">#http.port: 9200</span><br><span class="line">#</span><br><span class="line"># For more information, consult the network module documentation.</span><br><span class="line">#</span><br><span class="line"># --------------------------------- Discovery ----------------------------------</span><br><span class="line">#</span><br><span class="line"># Pass an initial list of hosts to perform discovery when this node is started:</span><br><span class="line"># The default list of hosts is [&quot;127.0.0.1&quot;, &quot;[::1]&quot;]</span><br><span class="line">#</span><br><span class="line">#discovery.seed_hosts: [&quot;host1&quot;, &quot;host2&quot;]</span><br><span class="line">#</span><br><span class="line"># Bootstrap the cluster using an initial set of master-eligible nodes:</span><br><span class="line">#</span><br><span class="line">#cluster.initial_master_nodes: [&quot;node-1&quot;, &quot;node-2&quot;]</span><br><span class="line">#</span><br><span class="line"># For more information, consult the discovery and cluster formation module documentation.</span><br><span class="line">#</span><br><span class="line"># ---------------------------------- Various -----------------------------------</span><br><span class="line">#</span><br><span class="line"># Allow wildcard deletion of indices:</span><br><span class="line">#</span><br><span class="line">#action.destructive_requires_name: false</span><br><span class="line"></span><br><span class="line">#----------------------- BEGIN SECURITY AUTO CONFIGURATION -----------------------</span><br><span class="line">#</span><br><span class="line"># The following settings, TLS certificates, and keys have been automatically</span><br><span class="line"># generated to configure Elasticsearch security features on 24-07-2023 11:28:48</span><br><span class="line">#</span><br><span class="line"># --------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line"># Enable security features</span><br><span class="line">xpack.security.enabled: false</span><br><span class="line"></span><br><span class="line">xpack.security.enrollment.enabled: true</span><br><span class="line"></span><br><span class="line"># Enable encryption for HTTP API client connections, such as Kibana, Logstash, and Agents</span><br><span class="line">xpack.security.http.ssl:</span><br><span class="line">  enabled: false</span><br><span class="line">  keystore.path: certs/http.p12</span><br><span class="line"></span><br><span class="line"># Enable encryption and mutual authentication between cluster nodes</span><br><span class="line">xpack.security.transport.ssl:</span><br><span class="line">  enabled: true</span><br><span class="line">  verification_mode: certificate</span><br><span class="line">  keystore.path: certs/transport.p12</span><br><span class="line">  truststore.path: certs/transport.p12</span><br><span class="line"># Create a new cluster with the current node only</span><br><span class="line"># Additional nodes can still join the cluster later</span><br><span class="line">cluster.initial_master_nodes: [&quot;localhost.localdomain&quot;]</span><br><span class="line"></span><br><span class="line"># Allow HTTP API connections from anywhere</span><br><span class="line"># Connections are encrypted and require user authentication</span><br><span class="line">http.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br><span class="line">http.cors.enabled: true</span><br><span class="line">http.cors.allow-origin: &quot;*&quot;</span><br><span class="line"># Allow other nodes to join the cluster from anywhere</span><br><span class="line"># Connections are encrypted and mutually authenticated</span><br><span class="line">#transport.host: 0.0.0.0</span><br><span class="line"></span><br><span class="line">#----------------------- END SECURITY AUTO CONFIGURATION -------------------------</span><br></pre></td></tr></table></figure>
 
-<p>( •̀ ω •́ )✧首先先自己下载 <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a> Mysql的离线包，选择第二个64位的 Linux-Generic</p>
-<img src="./doc/1.PNG" style="zoom:75%;" />
-
-<p>下载了包以后用SFTP软件传到你想安装的目录下</p>
-<p><strong>第一步</strong>：先看看Linux服务器中有没有 Mariadb，有的话先卸载，卸载没遇到过，可以去百度，以为作者的服务器的啥样不是</p>
-<p><strong>第二步</strong>：删除&#x2F;etc&#x2F;my.cnf文件，因为会影响配置，所以先卸载了再说，后面可以再加上去</p>
-<p><strong>第三步</strong>：创建mysql用户组: <code>groupadd mysql</code></p>
-<p><strong>第四步</strong>：加入到mysql用户组里面 <code>useradd -g mysql mysql</code></p>
-<h5>注意！！作者之前操作问题，好像有mysql用户组，如果有的话，先执行一下，提升有的话，可以跳过第三部和第四步</h5>
-
-<p>进入你创建的目录下，比如 <code>mkdir /data</code>，将你的压缩包放在data下面，然后执行解压操作：<code>tar -zxvf xxxxx.tar.gz</code></p>
-<p>解压以后将解压的文件进行重命名操作 <code>mv xxxx mysql</code></p>
-<p>然后新建一个<code>vi /etc/my.cnf</code>，并且在里面写</p>
-<p>[mysql]<br>default-character-set&#x3D;utf8<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>[mysqld]<br>skip-name-resolve<br>port&#x3D;3306<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>basedir&#x3D;&#x2F;data&#x2F;mysql      #主要这里是mysql安装路径<br>datadir&#x3D;&#x2F;data&#x2F;mysql&#x2F;data   #这里主要是mysql存储路径，以你创建的为例<br>max_connections&#x3D;200<br>character-set-server&#x3D;utf8<br>default-storage-engine&#x3D;INNODB<br>lower_case_table_names&#x3D;1<br>max_allowed_packet&#x3D;16M</p>
-<img src="./doc/2.PNG" alt="如图" style="zoom:75%;" />
-
-<p>:x保存退出</p>
-<p><strong>第五步</strong>：设置mysql用户：</p>
-<p><code>mkdir /var/lib/mysql </code></p>
-<p><code>mkdir /var/lib/mysql/mysql </code></p>
-<p><code>chown -R mysql:mysql /var/lib/mysql </code></p>
-<p><code>chown -R mysql:mysql /var/lib/mysql/mysql</code></p>
-<p><strong>第六步</strong>：</p>
-<p>进入安装mysql软件目录</p>
-<p><code>cd /data/mysql</code></p>
-<p><code>chown -R mysql:mysql ./</code></p>
-<p><code>cd bin</code></p>
-<p><code>./mysqld --user=mysql --basedir=/data/mysql --datadir=/data/mysql/data/ --initialize  </code></p>
-<p><code>cd /data/mysql</code></p>
-<p><code>chown -R mysql:mysql data                   <em>#修改当前data目录拥有者为mysql用户</em></code></p>
-<p><strong>第七步</strong>：</p>
-<p>修改权限：</p>
-<p><code>chmod +x /etc/my.cnf</code></p>
-<h3 id="复制启动脚本到资源目录"><a href="#复制启动脚本到资源目录" class="headerlink" title="复制启动脚本到资源目录"></a>复制启动脚本到资源目录</h3><p><code>cd /home/mysql/ cp ./support-files/mysql.server /etc/init.d/mysqld </code></p>
-<p>加入权限: <code>chmod +x /etc/init.d/mysqld</code></p>
-<h3 id="将mysqld服务加入到系统服务"><a href="#将mysqld服务加入到系统服务" class="headerlink" title="将mysqld服务加入到系统服务"></a>将mysqld服务加入到系统服务</h3><p><code>chkconfig --add mysqld</code></p>
-<h3 id="检查mysqld服务是否已经生效"><a href="#检查mysqld服务是否已经生效" class="headerlink" title="检查mysqld服务是否已经生效"></a>检查mysqld服务是否已经生效</h3><p><code>chkconfig --list mysqld</code>，如果出现mysqld 0:off 1:off 2:on 3:on 4:on 5:on 6 说明成功</p>
-<h3 id="将mysql的bin目录加入PATH环境变量，编辑-etc-profile文件"><a href="#将mysql的bin目录加入PATH环境变量，编辑-etc-profile文件" class="headerlink" title="将mysql的bin目录加入PATH环境变量，编辑&#x2F;etc&#x2F;profile文件"></a>将mysql的bin目录加入PATH环境变量，编辑&#x2F;etc&#x2F;profile文件</h3><p><code>vi /etc/profile</code></p>
-<p><code>export PATH=$PATH:/data/mysql/bin</code></p>
-<p><code>source /etc/profile</code> #最后执行生效</p>
-<h4>🐎到最后mysql离线版本算是安装完成了，后面远程连接，修改密码操作参考第一个yum在线安教程的连接方法。
-
-
-
-<h1>三，Linux完全卸载MySQL5.7😘</h1>
-
-<p>如果要完完全全删除mysql，不能用yum remove 操作，因为删不干净，还会有残留包，因为作者是离线安装所以没有图片展示</p>
-<p><strong>首先</strong>：先查看mysql的组件包:</p>
-<p><code>rpm -qa | grep -i mysql</code></p>
-<p><strong>第二步</strong>：关闭mysql服务：</p>
-<p><code>service mysqld stop</code> 或者 <code>systemctl stop mysqld</code></p>
-<p><strong>第三步</strong>：查看mysql对应文件夹:</p>
-<p><code>find / -name mysql</code></p>
-<p><strong>第四步</strong>：删除组件：rpm -ev –nodeps xxxx组件包名</p>
-<p><strong>第五步</strong>：删除mysql所以有配置文件夹：</p>
-<p><code>rm -rf /var/lib/mysql</code>,不止这么多，第三步列出来的有什么就删除什么</p>
-<p><strong>最后</strong>：执行第一步和第三步如何啥也没有就说明彻底卸载了</p>
+<p>最后启动 .&#x2F;elasticsearch 并且开放端口9200</p>
+<p>最后在浏览器中输入 localhost:9200即可部署成功</p>
+<p><img src="/./doc/Snipaste_2023-07-24_20-52-39.png"></p>
 
       </section>
 
@@ -232,28 +161,14 @@
       
         <nav class="article-nav">
           
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-machine/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker machine</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
           
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
     <div class="card-text">
       
-        <a href="/2024/01/11/caddy/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">caddy 出现的问题</h2>
+        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
         </a>
       
       <div class="card-text--row">Older</div>
