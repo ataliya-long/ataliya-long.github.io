@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>mysql容器与本机挂载做持久化 | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">mysql容器与本机挂载做持久化</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:48:26.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,35 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
+        <h2>mysql容器与本机挂载做持久化</h2>
 
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
+<p>要在Docker容器中运行的MySQL与本地MySQL数据共享并实现持久化，可以通过Docker数据卷（volumes）将本地文件系统上的目录挂载到MySQL容器中。以下是一些简单步骤来实现这个目标：</p>
 <ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
+<li>首先，在本地文件系统上创建一个目录，用于存储MySQL数据。例如，你可以创建一个名为<code>mysql-data</code>的目录：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /mysql-data</span><br></pre></td></tr></table></figure>
 
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
+<p>这将在你的用户主目录下创建一个名为<code>mysql-data</code>的文件夹。</p>
+<ol>
+<li>使用<code>docker run</code>命令运行一个新的MySQL容器，并使用<code>-v</code>（或<code>--volume</code>）选项将本地目录挂载到容器的<code>/var/lib/mysql</code>目录。这是MySQL容器中用于存储数据的默认目录。以下是一个运行MySQL容器的示例命令：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --name mysql-container \</span><br><span class="line">  -p 3306:3306 \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=my-secret-pw \</span><br><span class="line">  -v /mysql-data:/var/lib/mysql \</span><br><span class="line">  mysql:latest</span><br></pre></td></tr></table></figure>
 
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
+<p>在这个例子中：</p>
+<ul>
+<li><code>-d</code>：以分离模式运行容器。</li>
+<li><code>--name mysql-container</code>：为容器指定一个名称。</li>
+<li><code>-p 3306:3306</code>：将容器的3306端口映射到宿主机的3306端口。</li>
+<li><code>-e MYSQL_ROOT_PASSWORD=my-secret-pw</code>：设置MySQL root用户的密码。</li>
+<li><code>-v ~/mysql-data:/var/lib/mysql</code>：将本地目录<code>~/mysql-data</code>挂载到容器的<code>/var/lib/mysql</code>目录。</li>
+<li><code>mysql:latest</code>：使用的MySQL Docker镜像及其版本。</li>
+</ul>
+<ol>
+<li><p>容器启动后，MySQL的数据文件将存储在本地<code>~/mysql-data</code>目录中。这意味着，即使你停止并删除容器，数据仍会保留在本地目录中。要在新的MySQL容器中使用相同的数据，只需使用相同的<code>-v</code>选项将本地目录挂载到新容器即可。</p>
+</li>
+<li><p>在容器中创建的数据库和表将在本地挂载的MySQL数据目录中可见。当你将本地目录（如<code>~/mysql-data</code>）挂载到容器的<code>/var/lib/mysql</code>目录时，容器中的MySQL实例将在这个目录中存储所有数据文件。当你在容器中创建一个新的数据库或表时，MySQL会在数据目录中创建相应的文件和文件夹。由于你已经将容器的数据目录挂载到了本地目录，因此你可以在本地目录中看到这些文件。对于每个创建的数据库，你将在数据目录中看到一个与数据库同名的文件夹。在这个文件夹中，你将找到该数据库中所有表的文件。文件的扩展名取决于表的存储引擎。例如，对于InnoDB存储引擎，表文件具有<code>.ibd</code>扩展名。</p>
 </li>
 </ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
-
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
 
       </section>
 
@@ -182,8 +173,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        <a href="/2024/01/13/PostgreSQL%E5%AE%89%E8%A3%85/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">PostgreSQL安装</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -197,8 +188,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E9%85%8D%E7%BD%AEDNS/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux系统下配置DNS</h2>
         </a>
       
       <div class="card-text--row">Older</div>

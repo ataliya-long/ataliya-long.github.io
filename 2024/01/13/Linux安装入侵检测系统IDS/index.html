@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>Linux安装入侵检测系统IDS | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">Linux安装入侵检测系统IDS</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:37:37.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,35 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
+        <h1>Linux安装入侵检测系统IDS</h1>
 
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
-<ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
-
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
-</li>
-</ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
-
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+<p>1.首先先安装gcc:</p>
+<p><code>yum install -y gcc inotify-tools bind-utils</code></p>
+<p>2.通过命令：</p>
+<p><code>wget -O ossec.2.9.3.tar.gz <a target="_blank" rel="noopener" href="https://github.com/ossec/ossec-hids/archive/2.9.3.tar.gz">https://github.com/ossec/ossec-hids/archive/2.9.3.tar.gz</a></code></p>
+<p>下载完成后解压操作：</p>
+<p><code>tar -zxvf ossec.2.9.3.tar.gz</code></p>
+<p><img src="/.com//ids1.png"></p>
+<p>执行:</p>
+<p>首先先个一个读写权限 <code>chmod +x install.sh</code></p>
+<p><code>./install.sh</code></p>
+<p>安装完成后会出现一个选择语言的选项：</p>
+<p><img src="/.com//ids2.png"></p>
+<blockquote>
+<p>选择cn</p>
+</blockquote>
+<p><img src="/.com//ids3.png"></p>
+<blockquote>
+<p>已经装了gcc了，就继续</p>
+</blockquote>
+<p><img src="/.com//ids4.PNG"></p>
+<blockquote>
+<p>本博主是本机安装的，直接就选local</p>
+</blockquote>
+<p>一路y，直到白名单，选择n</p>
+<p>安装完成后</p>
+<p>在<code>/var/ossec/bin/ossec-control start</code>里面启动</p>
+<p>所有的警告都会存放于<code>/var/ossec/logs/alerts</code></p>
 
       </section>
 
@@ -182,8 +173,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        <a href="/2024/01/13/Debian%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%BC%98%E5%8C%96/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Debian系统的优化</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -197,8 +188,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/%E5%88%A9%E7%94%A8Docker-compose%E9%83%A8%E7%BD%B2%E5%89%8D%E5%90%8E%E7%AB%AF%E9%A1%B9%E7%9B%AE/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">利用Docker -compose部署前后端项目</h2>
         </a>
       
       <div class="card-text--row">Older</div>

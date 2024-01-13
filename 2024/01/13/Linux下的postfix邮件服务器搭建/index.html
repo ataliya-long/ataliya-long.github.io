@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>Linux下的postfix邮件服务器搭建 | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">Linux下的postfix邮件服务器搭建</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:45:36.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,124 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
+        <h1>Linux下的postfix邮件服务器搭建</h1>
 
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
-<ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
+<p><img src="/.com//wallhaven-39pz13.jpg"></p>
+<h5>1.先准备开启邮件服务器的端口，25端口（SMTP)用来发送邮件，110（pop3，用来接收邮件），143（imap服务，用于接收邮件）</h5>
 
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">firewall-cmd --zone=public --add-port=25/tcp --permanent  (110,143)</span><br><span class="line">firewall-cmd --reload</span><br></pre></td></tr></table></figure>
 
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
-</li>
-</ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
+<p><img src="/.com//Snipaste_2023-02-15_14-51-34.png"></p>
+<p>或者直接关闭防火墙（不推荐）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br></pre></td></tr></table></figure>
 
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>关闭selinux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/selinux/config</span><br></pre></td></tr></table></figure>
 
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+<p><img src="/.com//Snipaste_2023-02-15_14-50-58.png"></p>
+<blockquote>
+<p>改为disabled</p>
+</blockquote>
+<h5>2.修改主机名</h5>
+
+<p>将主机名改为邮件服务器域名,如 mail.testmail.com</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname mail.testmail.com</span><br></pre></td></tr></table></figure>
+
+<h5>3.安装DNS服务</h5>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install bind</span><br></pre></td></tr></table></figure>
+
+<p>编辑DNS配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/named.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-07-25.png"></p>
+<p>配置子配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/named.rfc1912.zones</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-09-32.png"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start named</span><br></pre></td></tr></table></figure>
+
+<p>进入DNS服务器区域配置文件目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /var/named</span><br></pre></td></tr></table></figure>
+
+<p>复制模板区域配置文件为指定区域配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp -p named.localhost testmail.com.zone</span><br><span class="line">cp -p named.localhost testmail.com.local</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-13-43.png"></p>
+<p>编辑正向区域配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim testmail.com.zone</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-15-20.png"></p>
+<p>编辑反向区域配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim testmail.com.local</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-16-58.png"></p>
+<p>启动DNS域名解析服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart named</span><br></pre></td></tr></table></figure>
+
+<h5>4.安装nslookup命令</h5>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install bind-utils</span><br></pre></td></tr></table></figure>
+
+<p>将本机的DNS指向自己的DNS服务器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-20-02.png"></p>
+<p>解析邮件服务器地址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nslookup mail.testmail.com</span><br></pre></td></tr></table></figure>
+
+<h5>5.安装Postfix</h5>
+
+<p>一般centos系统自带postfix</p>
+<p><img src="/.com//Snipaste_2023-02-15_15-23-00.png"></p>
+<p>检测postfix是否支持cyrus dovecot功能</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postconf -a</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-24-35.png"></p>
+<p>*** 如果出现：libmysqlclient.so.18: cannot open shared object file: No such file or directory****</p>
+<p>则需要安装mysql-mariadb：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y dovecot mariadb-server dovecot-mysql</span><br></pre></td></tr></table></figure>
+
+<p>然后编辑POSTFIX配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/postfix/main.cf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-30-13.png"></p>
+<p><img src="/.com//Snipaste_2023-02-15_15-30-22.png"></p>
+<p><img src="/.com//Snipaste_2023-02-15_15-30-28.png"></p>
+<p><img src="/.com//Snipaste_2023-02-15_15-30-40.png"></p>
+<p>检查postfix有没有错误，无输出就是没有错了，当然输出warring也无所谓而已，不影响后续结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">postfix check</span><br></pre></td></tr></table></figure>
+
+<p>启动postfix</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start postfix</span><br></pre></td></tr></table></figure>
+
+<h5>6.测试</h5>
+
+<p>添加邮件账号组</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd mailusers</span><br></pre></td></tr></table></figure>
+
+<p>再添加两个测试邮件服务账号：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd -g mailusers -s /sbin/nologin long</span><br><span class="line">passwd long</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd -g mailusers -s /sbin/nologin jack</span><br><span class="line">passwd jack</span><br></pre></td></tr></table></figure>
+
+<p>远程telent登录测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet mail.testmail.com 25</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-02-15_15-38-49.png"></p>
+<p>检查是否收到邮件</p>
+<p><code>cd /home/jack/Maildir/new/</code></p>
+<p><img src="/.com//Snipaste_2023-02-15_15-40-31.png"></p>
+<h5>7.测试给公网发送邮件</h5>
+
+<p>安装mailx服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install mailx</span><br></pre></td></tr></table></figure>
+
+<p>测试给公网发送邮件：</p>
+<p><img src="/.com//Snipaste_2023-02-15_15-42-57.png"></p>
+<p>发送成功，一般都在垃圾邮箱里面，哈哈哈</p>
+<p><img src="/.com//Snipaste_2023-02-15_15-43-58.png"></p>
+<p><strong>end-2023&#x2F;2&#x2F;15-yanhaochen</strong></p>
 
       </section>
 
@@ -182,8 +262,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        <a href="/2024/01/13/Linux%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux用户密码加密解密</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -197,8 +277,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/Linux%E5%9F%BA%E7%A1%80/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux基础</h2>
         </a>
       
       <div class="card-text--row">Older</div>

@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>PostgreSQL安装 | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">PostgreSQL安装</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:49:13.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,67 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
-
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
-<ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
-
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
-</li>
+        <ol>
+<li><strong>添加 PostgreSQL Yum Repository：</strong><br>PostgreSQL 官方提供了 Yum Repository，你可以通过以下命令添加此 Repository：</li>
 </ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br></pre></td></tr></table></figure>
+<p>请注意，你应该根据你的操作系统版本和 PostgreSQL 版本替换上述链接中的 <code>EL-7-x86_64</code>。</p>
+<ol start="2">
+<li><strong>安装 PostgreSQL：</strong><br>使用以下命令来安装 PostgreSQL，假设你要安装的是 PostgreSQL 13：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install postgresql13 postgresql13-server</span><br></pre></td></tr></table></figure>
 
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><strong>初始化 PostgreSQL：</strong><br>安装完成后，你需要初始化 PostgreSQL 数据库。这可以通过运行以下命令完成：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/pgsql-13/bin/postgresql-13-setup initdb</span><br></pre></td></tr></table></figure>
 
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+<ol start="4">
+<li><strong>启动 PostgreSQL：</strong><br>然后，你需要启动 PostgreSQL 服务：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start postgresql-13</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><strong>设置 PostgreSQL 开机启动：</strong><br>如果你想在系统启动时自动启动 PostgreSQL，你可以运行：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> postgresql-13</span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li><strong>登录到 PostgreSQL：</strong><br>PostgreSQL 创建了一个名为 <code>postgres</code> 的系统用户和数据库用户。你可以切换到 <code>postgres</code> 用户然后使用 <code>psql</code> 命令行工具：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo -u postgres psql</span><br></pre></td></tr></table></figure>
+
+<p>此时，你应该已经成功在你的系统上安装了 PostgreSQL，并且可以开始使用它了。这些步骤可能会因你的系统和你的具体需求而略有不同。如果你遇到任何问题，你应该查阅 PostgreSQL 的官方文档或者 CentOS 的社区帮助页面。</p>
+<p>如果出现：</p>
+<p>上次元数据过期检查：0:04:44 前，执行于 2023年05月30日 星期二 15时35分56秒。 所有的匹配结果均已经被参数的模块化过滤条件筛除: postgresql13 所有的匹配结果均已经被参数的模块化过滤条件筛除: postgresql13-server 错误：没有任何匹配: postgresql13 postgresql13-server</p>
+<p>则：</p>
+<p>如果你在使用基于 CentOS 的系统，你可以尝试使用下面的步骤来添加 PostgreSQL 官方的 Yum Repository：</p>
+<ol>
+<li><strong>导入 GPG Key：</strong></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rpm --import https://download.postgresql.org/pub/repos/yum/RPM-GPG-KEY-PGDG</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>添加 Yum Repository：</strong></li>
+</ol>
+<p>根据你的 CentOS 版本（例如 CentOS 7），运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -o /etc/yum.repos.d/pgdg.repo https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>请注意，你需要替换 <code>EL-7-x86_64</code> 来匹配你的系统版本和硬件架构。</p>
+<ol start="3">
+<li><strong>禁用 PostgreSQL 模块：</strong></li>
+</ol>
+<p>为了防止软件包冲突，需要禁用 PostgreSQL 模块：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf -qy module <span class="built_in">disable</span> postgresql</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><strong>安装 PostgreSQL：</strong></li>
+</ol>
+<p>现在你可以尝试再次安装 PostgreSQL：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo dnf install postgresql13 postgresql13-server</span><br></pre></td></tr></table></figure>
+
+<p>如果你的操作系统是 Fedora，你可能需要替换上述命令中的 <code>dnf</code> 为 <code>yum</code>，同时 <code>dnf -qy module disable postgresql</code> 可能也不需要。</p>
+<p>如果上述步骤仍然不能解决问题，建议你查阅 PostgreSQL 的官方文档或者 CentOS 的社区帮助页面，获取更详细的安装帮助。</p>
 
       </section>
 
@@ -182,8 +205,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        <a href="/2024/01/13/%E5%AE%89%E8%A3%85TIDB%E5%8D%95%E6%9C%BA%E7%89%88/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">安装TIDB单机版</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -197,8 +220,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/mysql%E5%AE%B9%E5%99%A8%E4%B8%8E%E6%9C%AC%E6%9C%BA%E6%8C%82%E8%BD%BD%E5%81%9A%E6%8C%81%E4%B9%85%E5%8C%96/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">mysql容器与本机挂载做持久化</h2>
         </a>
       
       <div class="card-text--row">Older</div>

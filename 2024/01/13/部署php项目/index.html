@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>部署php项目 | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">部署php项目</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:35:21.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,46 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
+        <h1>部署php</h1>
 
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
+<p>要在Ubuntu系统上安装并运行PHP，你需要遵循以下步骤。这些步骤适用于大多数版本的Ubuntu，包括最新的版本。但是，确保你根据你的具体情况进行适当的调整。</p>
 <ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
-
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
-</li>
+<li>更新软件包索引： 首先，打开终端并运行以下命令以更新软件包索引：</li>
 </ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br></pre></td></tr></table></figure>
 
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<ol>
+<li>安装PHP： 然后，你可以使用<code>apt</code>命令安装PHP。在这个例子中，我们将安装PHP 7.4，但你可以根据需要选择其他版本：</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install php</span><br></pre></td></tr></table></figure>
 
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+<ol>
+<li>验证安装： 安装完成后，你可以通过运行以下命令来验证PHP是否已成功安装：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -v</span><br></pre></td></tr></table></figure>
+
+<p>这将显示你安装的PHP版本信息。</p>
+<ol>
+<li>安装PHP模块（可选）： 你可能还需要安装一些PHP模块，例如MySQL模块或者GD模块。这些模块可以通过<code>apt</code>命令进行安装，例如：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install php-mysql php-gd</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>安装并配置Web服务器（例如，Apache）： 为了让你的PHP代码在Web服务器上运行，你需要安装并配置一个Web服务器。例如，你可以安装Apache：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install apache2 libapache2-mod-php</span><br></pre></td></tr></table></figure>
+
+<p>然后，你需要重启Apache以使更改生效：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart apache2</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>创建PHP文件进行测试： 在Apache的文档根目录（通常是<code>/var/www/html</code>）中，创建一个<code>.php</code>文件进行测试：</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">echo</span> <span class="string">&quot;&lt;?php phpinfo(); ?&gt;&quot;</span> &gt; /var/www/html/info.php</span><br></pre></td></tr></table></figure>
+
+<p>然后，打开Web浏览器并访问<code>http://localhost/info.php</code>，你应该能看到一个页面，其中包含了PHP的详细信息，这表示PHP已经成功安装并在Web服务器上运行。</p>
+<p>以上就是在Ubuntu系统上安装并运行PHP的步骤。请记住，根据你的具体需求和环境，你可能需要进行一些其他的配置和优化。</p>
+<p><img src="/.com//php.png"></p>
 
       </section>
 
@@ -182,8 +184,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        <a href="/2024/01/13/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">磁盘管理</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -197,8 +199,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/nginx%E5%AE%89%E8%A3%85/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">nginx安装</h2>
         </a>
       
       <div class="card-text--row">Older</div>

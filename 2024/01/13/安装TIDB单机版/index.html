@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>安装TIDB单机版 | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">安装TIDB单机版</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:49:48.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,87 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
+        <h1>安装TIDB单机版</h1>
 
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
+<p>要在 CentOS 上安装 TiDB 数据库的单机版，您可以按照以下步骤操作。在本示例中，我们将使用 TiUP 部署工具来部署 TiDB。</p>
+<p>首先，确保您的 CentOS 系统已更新：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure>
+
+<p>安装 TiUP：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<p>将 TiUP 的二进制文件目录添加到 <code>PATH</code> 环境变量中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bashCopy codeecho &#x27;export PATH=$HOME/.tiup/bin:$PATH&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>安装 TiUP 集群组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup install cluster</span><br></pre></td></tr></table></figure>
+
+<p>部署单机版 TiDB：</p>
+<p>我们将使用 TiUP 快速搭建一个单机版的 TiDB。运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup playground</span><br></pre></td></tr></table></figure>
+
+<p>此命令将启动一个包括 1 个 PD（Placement Driver）、1 个 TiKV（分布式事务性键值存储）和 1 个 TiDB（分布式关系型数据库）组件的本地 TiDB 集群。</p>
+<p>连接到 TiDB：</p>
+<p>启动 <code>tiup playground</code> 后，您将看到一条消息，指示如何连接到 TiDB。默认情况下，TiDB 将监听在 127.0.0.1:4000 上。您可以使用 MySQL 客户端或兼容的工具连接到 TiDB。</p>
+<p>例如，您可以使用 MySQL 命令行客户端连接到 TiDB。首先，确保已安装 MySQL 命令行客户端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y mysql</span><br></pre></td></tr></table></figure>
+
+<p>然后，使用以下命令连接到 TiDB：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h 127.0.0.1 -P 4000 -u root</span><br></pre></td></tr></table></figure>
+
+<p>现在，您已经成功在 CentOS 上安装并连接到了 TiDB 数据库的单机版。</p>
+<p><img src="/.com//Users\yanhaochen\Pictures\Snipaste_2023-03-30_16-59-43.png"></p>
+<h1>将TIDB部署到生产环境当中</h1>
+
+<p>要将 TiDB 部署到生产环境，您需要采用更加稳定、安全的方式进行部署。TiUP 是官方推荐的部署工具。在以下示例中，我们将使用 TiUP 部署 TiDB 集群到生产环境。</p>
 <ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
-
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
-</li>
+<li>准备环境：</li>
 </ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
+<p>确保您的 CentOS 系统已更新：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum update</span><br></pre></td></tr></table></figure>
 
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<ol>
+<li>安装 TiUP：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto &#x27;=https&#x27; --tlsv1.2 -sSf https://tiup-mirrors.pingcap.com/install.sh | sh</span><br></pre></td></tr></table></figure>
 
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+<ol>
+<li>将 TiUP 的二进制文件目录添加到 <code>PATH</code> 环境变量中：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bashCopy codeecho &#x27;export PATH=$HOME/.tiup/bin:$PATH&#x27; &gt;&gt; ~/.bashrc</span><br><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>安装 TiUP 集群组件：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup install cluster</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>准备部署配置文件：</li>
+</ol>
+<p>在您的工作目录中创建一个名为 <code>tidb_topology.yaml</code> 的文件，并使用以下示例配置填充该文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">  user: &quot;tidb&quot;</span><br><span class="line">  ssh_port: 22</span><br><span class="line">  deploy_dir: &quot;/tidb-deploy&quot;</span><br><span class="line">  data_dir: &quot;/tidb-data&quot;</span><br><span class="line"></span><br><span class="line">pd_servers:</span><br><span class="line">- host: 10.0.1.1</span><br><span class="line">  - host: 10.0.1.2</span><br><span class="line">  - host: 10.0.1.3</span><br><span class="line"></span><br><span class="line">tikv_servers:</span><br><span class="line">  - host: 10.0.1.4</span><br><span class="line">  - host: 10.0.1.5</span><br><span class="line">  - host: 10.0.1.6</span><br><span class="line"></span><br><span class="line">tidb_servers:</span><br><span class="line">  - host: 10.0.1.7</span><br><span class="line">  - host: 10.0.1.8</span><br><span class="line"></span><br><span class="line">tiflash_servers:</span><br><span class="line">  - host: 10.0.1.9</span><br></pre></td></tr></table></figure>
+
+<p>请注意，您需要将上述配置文件中的 IP 地址替换为您实际服务器的 IP 地址。</p>
+<ol>
+<li>使用 TiUP 部署集群：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup cluster deploy &lt;cluster-name&gt; &lt;tidb-version&gt; /path/to/tidb_topology.yaml --user root</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>&lt;cluster-name&gt;</code> 替换为您的集群名称，<code>&lt;tidb-version&gt;</code> 替换为您想要部署的 TiDB 版本，例如 “v5.1.1”，并将 <code>/path/to/tidb_topology.yaml</code> 替换为您实际的配置文件路径。</p>
+<p>部署成功后，TiUP 会显示集群的部署信息和访问方式。</p>
+<ol>
+<li>启动集群：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup cluster start &lt;cluster-name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>&lt;cluster-name&gt;</code> 替换为您的集群名称。</p>
+<ol>
+<li>检查集群状态：</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tiup cluster display &lt;cluster-name&gt;</span><br></pre></td></tr></table></figure>
+
+<p>将 <code>&lt;cluster-name&gt;</code> 替换为您的集群名称。</p>
+<p>现在，您已经成功部署了一个生产环境的 TiDB 集群。要管理和维护集群，请参阅 TiDB 官方文档，了解更多关于 TiUP 和其他管理工具的详细信息。</p>
 
       </section>
 
@@ -177,28 +220,14 @@
       
         <nav class="article-nav">
           
-            <div class="article-nav-item layout-padding">
-  <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
-    
-    <div class="card-text">
-      
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
-        </a>
-      
-      <div class="card-text--row">Newer</div>
-    </div>
-  </article>
-</div>
-          
           
             <div class="article-nav-item layout-padding">
   <article class="card-container article-nav-card content-padding--primary soft-size--large soft-style--box">
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/PostgreSQL%E5%AE%89%E8%A3%85/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">PostgreSQL安装</h2>
         </a>
       
       <div class="card-text--row">Older</div>

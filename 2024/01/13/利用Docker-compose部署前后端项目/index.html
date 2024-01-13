@@ -22,7 +22,7 @@
 
   
 
-  <title>安装docker machine | 小塔的个人博客</title>
+  <title>利用Docker -compose部署前后端项目 | 小塔的个人博客</title>
 
   
 
@@ -97,11 +97,11 @@
     <div class="header-content">
       <div class="post-text layout-block">
         <div class="layout-margin">
-          <h1 class="title-wrap">安装docker machine</h1>
+          <h1 class="title-wrap">利用Docker -compose部署前后端项目</h1>
           <h2 class="title-sub-wrap">
             <strong>Ataliya</strong>
             <span>发布于</span>
-            <time  class="article-date" datetime="2024-01-12T07:16:29.000Z" itemprop="datePublished">2024-01-12</time>
+            <time  class="article-date" datetime="2024-01-13T11:36:48.000Z" itemprop="datePublished">2024-01-13</time>
           </h2>
           
           
@@ -132,44 +132,41 @@
       
       
       <section class="article-entry markdown-body layout-margin content-padding--large soft-size--large soft-style--box">
-        <h2>安装Docker Machine</h2>
+        <h1>利用Docker -compose部署前后端项目</h1>
 
-<p><strong>Docker Machine</strong> 是一个工具，用于在各种平台上安装和管理 Docker。以下是在不同操作系统上安装 Docker Machine 的方法：</p>
-<p><strong>对于 macOS 和 Windows：</strong></p>
-<p>对于 macOS 和 Windows 用户，建议安装 <a target="_blank" rel="noopener" href="https://www.docker.com/products/docker-desktop">Docker Desktop</a>，它包含 Docker Machine。访问 Docker 官网，根据您的操作系统选择合适的版本进行下载和安装。</p>
-<p><strong>对于 Linux：</strong></p>
+<p>Docker Compose 是 Docker 官方提供的一个工具，可以通过简单的 YAML 文件来定义和运行多个 Docker 容器应用</p>
+<p>好处如下：</p>
+<blockquote>
 <ol>
-<li><p>下载最新版本的 Docker Machine 二进制文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">base=https://github.com/docker/machine/releases/download/v0.16.2 &amp;&amp;</span><br><span class="line">curl -L $base/docker-machine-$(uname -s)-$(uname -m) &gt;/tmp/docker-machine &amp;&amp;</span><br><span class="line">sudo install /tmp/docker-machine /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-
-<p>上述命令将下载 v0.16.2 版本的 Docker Machine。您可以访问 <a target="_blank" rel="noopener" href="https://github.com/docker/machine/releases">Docker Machine 发布页面</a> 查看最新版本并相应地更新上述命令。</p>
-</li>
-<li><p>添加可执行权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>验证安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine version</span><br></pre></td></tr></table></figure>
-
-<p>如果安装成功，您将看到 Docker Machine 的版本信息。</p>
-</li>
+<li>简化部署：使用 Docker Compose 可以一次性启动多个容器，包括数据库、消息队列、应用程序等，并可以按需配置容器之间的网络、卷等，从而简化了部署过程。</li>
+<li>标准化部署：使用 Docker Compose 部署应用程序可以保证容器的环境和依赖项的一致性，从而确保应用程序在任何地方都可以运行。</li>
+<li>管理容器：使用 Docker Compose 可以轻松地启动、停止、删除容器，从而方便管理容器。</li>
+<li>扩展应用程序：使用 Docker Compose 可以轻松地扩展应用程序，例如添加新的容器、配置负载均衡等。</li>
+<li>节省时间：使用 Docker Compose 可以节省配置和部署应用程序的时间，从而更快地推出新功能和更新。</li>
 </ol>
-<p><strong>安装 Bash Completion（可选）：</strong></p>
-<p>为了获得更好的命令行体验，您可以安装 Docker Machine 的 Bash Completion。以下是在不同操作系统上安装的方法：</p>
-<ul>
-<li><p>对于 macOS，您可以使用 Homebrew 安装：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">brew install bash-completion</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对于 Linux（Debian&#x2F;Ubuntu）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install bash-completion</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>下面利用编写docker-compose.yml文件来进行部署</p>
+<p>首先在&#x2F;opt&#x2F;test&#x2F;文件夹里创建一个docker-compose.yml</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> docker-compose.yml</span><br></pre></td></tr></table></figure>
 
-<p>对于其他 Linux 发行版，请查阅相应文档以获取正确的安装命令。</p>
-</li>
-</ul>
-<p>然后，将以下内容添加到您的 <code>~/.bashrc</code>、<code>~/.bash_profile</code> 或 <code>~/.profile</code> 文件中：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $(brew --prefix)/etc/bash_completion ]; then</span><br><span class="line">  . $(brew --prefix)/etc/bash_completion</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>里面编写：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/test/build/framing:/usr/share/nginx/html</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/test/nginx.conf:/etc/nginx/nginx.conf</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">backend:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">openjdk:17-jdk</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9940:9940&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/opt/test/demo/app.jar:/app.jar</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;app.jar&quot;</span>,<span class="string">&quot;--server.port=9940&quot;</span>]</span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
 
-<p>重新启动终端以使更改生效。</p>
-<p>现在，您应该已经成功安装了 Docker Machine。您可以通过运行 <code>docker-machine</code> 命令查看可用选项和子命令。要了解如何使用 Docker Machine，请参阅 <a target="_blank" rel="noopener" href="https://docs.docker.com/machine/">Docker Machine 官方文档</a>。</p>
+<p><img src="/.com//Snipaste_2023-05-06_10-29-43.png"></p>
+<blockquote>
+<p>从这个docker-compose.yml看起来，其中web服务映射到80端口，backend服务映射到9940端口，并将本地的&#x2F;app.jar文件映射到了容器内的&#x2F;app.jar文件。另外，backend服务的command指令可以保证在容器启动后直接运行app.jar文件。</p>
+</blockquote>
+<blockquote>
+<p>前端在build文件里，后端app.jar在demo里</p>
+</blockquote>
+<p><img src="/.com//Snipaste_2023-05-06_10-31-00.png"></p>
+<p>最后运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up或者docker-compose up --build</span><br></pre></td></tr></table></figure>
+
+<p><img src="/.com//Snipaste_2023-05-06_10-28-05.png"></p>
+<p>另外的docker compose其他命令：</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up: 启动所有定义的服务，如果服务不存在则自动构建。</span><br><span class="line">docker-compose up &lt;service<span class="built_in">_</span>name&gt;: 启动指定服务。</span><br><span class="line">docker-compose down: 关闭所有服务，移除所有容器、网络和卷。</span><br><span class="line">docker-compose ps: 列出正在运行的容器。</span><br><span class="line">docker-compose logs: 显示服务日志。</span><br><span class="line">docker-compose restart: 重启所有服务。</span><br><span class="line">docker-compose stop: 停止所有服务。</span><br><span class="line">docker-compose build: 构建镜像。</span><br><span class="line">docker-compose exec &lt;service<span class="built_in">_</span>name&gt; &lt;command&gt;: 在指定服务上运行命令。例如：docker-compose exec webserver bash 可以在名为 webserver 的服务上运行 bash 命令。</span><br></pre></td></tr></table></figure>
+
 
       </section>
 
@@ -182,8 +179,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85docker-compose/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装docker compose</h2>
+        <a href="/2024/01/13/Linux%E5%AE%89%E8%A3%85%E5%85%A5%E4%BE%B5%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9FIDS/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">Linux安装入侵检测系统IDS</h2>
         </a>
       
       <div class="card-text--row">Newer</div>
@@ -197,8 +194,8 @@
     
     <div class="card-text">
       
-        <a href="/2024/01/12/%E5%AE%89%E8%A3%85%E5%8D%B8%E8%BD%BDmysql/" itemprop="url">
-          <h2 class="card-text--title text-ellipsis">安装卸载mysql</h2>
+        <a href="/2024/01/13/%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86/" itemprop="url">
+          <h2 class="card-text--title text-ellipsis">磁盘管理</h2>
         </a>
       
       <div class="card-text--row">Older</div>
