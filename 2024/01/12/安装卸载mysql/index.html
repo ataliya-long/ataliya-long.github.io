@@ -104,6 +104,11 @@
             <time  class="article-date" datetime="2024-01-12T07:14:19.000Z" itemprop="datePublished">2024-01-12</time>
           </h2>
           
+            <h2 class="last-time">
+              <span>最后更新于</span>
+              <time  class="article-updated" datetime="2024-01-13T13:06:04.095Z" itemprop="dateUpdated">2024-01-13</time>
+            </h2>
+          
           
           <ul class="wrap-list dark">
   
@@ -169,7 +174,7 @@
 <h1>二，Linux的离线的MySQL5.7安装😘</h1>
 
 <p>( •̀ ω •́ )✧首先先自己下载 <a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a> Mysql的离线包，选择第二个64位的 Linux-Generic</p>
-<img src="/.com//1.PNG" style="zoom:75%;">
+<img src="https://pic.imgdb.cn/item/65a28a3a871b83018af213f8.png" style="zoom:75%;">
 
 <p>下载了包以后用SFTP软件传到你想安装的目录下</p>
 <p><strong>第一步</strong>：先看看Linux服务器中有没有 Mariadb，有的话先卸载，卸载没遇到过，可以去百度，以为作者的服务器的啥样不是</p>
@@ -182,7 +187,7 @@
 <p>解压以后将解压的文件进行重命名操作 <code>mv xxxx mysql</code></p>
 <p>然后新建一个<code>vi /etc/my.cnf</code>，并且在里面写</p>
 <p>[mysql]<br>default-character-set&#x3D;utf8<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>[mysqld]<br>skip-name-resolve<br>port&#x3D;3306<br>socket&#x3D;&#x2F;var&#x2F;lib&#x2F;mysql&#x2F;mysql.sock<br>basedir&#x3D;&#x2F;data&#x2F;mysql      #主要这里是mysql安装路径<br>datadir&#x3D;&#x2F;data&#x2F;mysql&#x2F;data   #这里主要是mysql存储路径，以你创建的为例<br>max_connections&#x3D;200<br>character-set-server&#x3D;utf8<br>default-storage-engine&#x3D;INNODB<br>lower_case_table_names&#x3D;1<br>max_allowed_packet&#x3D;16M</p>
-<img src="/.com//2.PNG" alt="如图" style="zoom:75%;">
+<img src="https://pic.imgdb.cn/item/65a28a3f871b83018af22b08.png" alt="如图" style="zoom:75%;">
 
 <p>:x保存退出</p>
 <p><strong>第五步</strong>：设置mysql用户：</p>

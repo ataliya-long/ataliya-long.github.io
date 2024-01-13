@@ -198,8 +198,7 @@
 <h3 id="启动Konga"><a href="#启动Konga" class="headerlink" title="启动Konga"></a>启动Konga</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name konga \</span><br><span class="line">             --network kong-net \</span><br><span class="line">             -e &quot;TOKEN_SECRET=secret123&quot; \</span><br><span class="line">             -e &quot;DB_ADAPTER=postgres&quot; \</span><br><span class="line">             -e &quot;DB_URI=postgres://konga:konga@konga-database:5432/konga&quot; \</span><br><span class="line">             -e &quot;NODE_ENV=development&quot; \</span><br><span class="line">             -p 1337:1337 \</span><br><span class="line">             pantsel/konga</span><br></pre></td></tr></table></figure>
 
 <p>访问 IP+1337</p>
-<p><img src="/.com//Snipaste_2023-07-25_00-55-14.png"></p>
-
+<img src="/.com//">
       </section>
 
       
